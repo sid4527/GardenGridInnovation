@@ -4,7 +4,7 @@ import LoginPage from './LoginPage';  // Updated to import LoginPage
 function App() {
   return (
     <div className="App">
-      <LoginPage />  {/* Use LoginPage component */}
+      <LoginPage />  {/* Use LoginPage component .*/}
     </div>
   );
 }
