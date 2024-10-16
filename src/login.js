@@ -9,7 +9,7 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:5000/login', {
+      const response = await axios.post('https://gardengridinnovationapplication-6p9piz3e8.vercel.app/', {
         userId,
         password,
       });
