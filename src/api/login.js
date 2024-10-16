@@ -3,7 +3,7 @@ export default function handler(req, res) {
     if (req.method === 'POST') {
       const { userId, password } = req.body;
   
-      // Example user data for authentication
+      // Example user data for authentications..
       const users = [{ userId: 'user123', password: 'password123' }];
   
       const user = users.find(
