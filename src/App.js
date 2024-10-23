@@ -1,10 +1,12 @@
+// src/App.js
+
 import React from 'react';
-import LoginPage from './LoginPage';  // Updated to import LoginPage
+import Login from './Login';
 
 function App() {
   return (
     <div className="App">
-      <LoginPage />  {/* Use LoginPage component .*/}
+      <Login />
     </div>
   );
 }
