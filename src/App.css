@@ -43,8 +43,7 @@ footer {
 }
 
 .nav-tab {
-  background-color: black; /* Button background color */
-  color: white; /* Text color */
+  color: black; /* Text color */
   border: none;
   padding: 10px 20px;
   margin: 5px;
