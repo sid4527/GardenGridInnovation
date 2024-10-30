@@ -10,51 +10,42 @@ import GrowthTracking from './GrowthTracking';
 import Login from './Login';
 import './App.css';
 
-function App() {
-  const [selectedTab, setSelectedTab] = useState('Home');
-
-  // Set up location hook inside Router context
+function Layout() {
   const location = useLocation();
   const excludedPaths = ['/care-scheduling', '/inventory-management', '/growth-tracking', '/login'];
   const hideHeaderAndSearch = excludedPaths.includes(location.pathname);
 
-  const renderContent = () => {
-    switch (selectedTab) {
-      case 'Inventory Management':
-        return <InventoryManagement />;
-      case 'Care Scheduling':
-        return <CareScheduling />;
-      case 'Growth Tracking':
-        return <GrowthTracking />;
-      default:
-        return <Home />;
-    }
-  };
+  return (
+    <>
+      {!hideHeaderAndSearch && (
+        <header>
+          <h1>Garden Grid</h1>
+        </header>
+      )}
+      
+      {!hideHeaderAndSearch && (
+        <nav className="tabs">
+          <Link to="/" className="nav-tab">Home</Link>
+          <Link to="/inventory" className="nav-tab">Inventory</Link>
+          <Link to="/inventory-management" className="nav-tab">Entries</Link>
+          <Link to="/resources" className="nav-tab">Resources</Link>
+          <Link to="/reports" className="nav-tab">Reports</Link>
 
+          <div className="search-bar">
+            <label htmlFor="search">Search Bar:</label>
+            <input type="text" id="search" />
+          </div>
+        </nav>
+      )}
+    </>
+  );
+}
+
+function App() {
   return (
     <Router>
       <div className="app">
-        {!hideHeaderAndSearch && (
-          <header>
-            <h1>Garden Grid</h1>
-          </header>
-        )}
-        
-        {!hideHeaderAndSearch && (
-          <nav className="tabs">
-            <Link to="/" className="nav-tab" onClick={() => setSelectedTab('Home')}>Home</Link>
-            <Link to="/inventory" className="nav-tab" onClick={() => setSelectedTab('Inventory Management')}>Inventory</Link>
-            <Link to="/inventory-management" className="nav-tab" onClick={() => setSelectedTab('Entries')}>Entries</Link>
-            <Link to="/resources" className="nav-tab" onClick={() => setSelectedTab('Resources')}>Resources</Link>
-            <Link to="/reports" className="nav-tab" onClick={() => setSelectedTab('Reports')}>Reports</Link>
-
-            <div className="search-bar">
-              <label htmlFor="search">Search Bar:</label>
-              <input type="text" id="search" />
-            </div>
-          </nav>
-        )}
-        
+        <Layout />
         <main>
           <Routes>
             <Route path="/" element={<Home />} />
