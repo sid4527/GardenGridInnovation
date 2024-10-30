@@ -4,9 +4,6 @@ import './Resources.css';
 function Resources() {
   return (
     <div className="resources">
-      <header className="header">
-        <h1>Garden Grid</h1>
-      </header>
 
       <main className="content">
         <h2>Resources:</h2>

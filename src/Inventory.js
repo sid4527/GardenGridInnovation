@@ -4,22 +4,6 @@ import './Inventory.css';
 function Inventory() {
   return (
     <div className="inventory">
-      <header className="header">
-        <h1>Garden Grid</h1>
-      </header>
-
-      <nav className="tabs">
-        <button className="tab">Home</button>
-        <button className="tab active">Inventory</button>
-        <button className="tab">Entries</button>
-        <button className="tab">Resources</button>
-        <button className="tab">Reports</button>
-
-        <div className="search-bar">
-          <label htmlFor="search">Search Bar:</label>
-          <input type="text" id="search" />
-        </div>
-      </nav>
 
       <div className="filter-sort-section">
         <div className="filter-group">
