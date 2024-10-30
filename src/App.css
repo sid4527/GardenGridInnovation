@@ -42,8 +42,18 @@ footer {
   pointer-events: none;
 }
 
-nav-tab {
-  background-color: black;
+.nav-tab {
+  background-color: black; /* Button background color */
+  color: white; /* Text color */
+  border: none;
+  padding: 10px 20px;
+  margin: 5px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.nav-tab:hover {
+  opacity: 0.8; /* Slightly dim on hover */
 }
 
 @media (prefers-reduced-motion: no-preference) {
