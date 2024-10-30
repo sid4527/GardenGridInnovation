@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
-import Home from './Home'; // Import Home component
+import { BrowserRouter as Router, Route, Routes, Link, useLocation } from 'react-router-dom';
+import Home from './Home';
 import Inventory from './Inventory';
-import Resources from './Resources'; // Import Resources page
-import Reports from './Reports'; // Import Reports page
+import Resources from './Resources';
+import Reports from './Reports';
 import InventoryManagement from './InventoryManagement';
 import CareScheduling from './CareScheduling';
 import GrowthTracking from './GrowthTracking';
@@ -12,6 +12,13 @@ import './App.css';
 
 function App() {
   const [selectedTab, setSelectedTab] = useState('Home');
+
+  // Function to check if the current path is one of the excluded pages
+  const useHideHeaderAndSearch = () => {
+    const location = useLocation();
+    const excludedPaths = ['/care-scheduling', '/inventory-management', '/growth-tracking', '/login'];
+    return excludedPaths.includes(location.pathname);
+  };
 
   const renderContent = () => {
     switch (selectedTab) {
@@ -22,29 +29,35 @@ function App() {
       case 'Growth Tracking':
         return <GrowthTracking />;
       default:
-        return <Home />; // Default to Home page
+        return <Home />;
     }
   };
+
+  const hideHeaderAndSearch = useHideHeaderAndSearch();
 
   return (
     <Router>
       <div className="app">
-        <header>
-          <h1>Garden Grid</h1>
-        </header>
+        {!hideHeaderAndSearch && (
+          <header>
+            <h1>Garden Grid</h1>
+          </header>
+        )}
         
-        <nav className="tabs">
-          <Link to="/" className="nav-tab" onClick={() => setSelectedTab('Home')}>Home</Link>
-          <Link to="/inventory" className="nav-tab" onClick={() => setSelectedTab('Inventory Management')}>Inventory</Link>
-          <Link to="/inventory-management" className="nav-tab" onClick={() => setSelectedTab('Entries')}>Entries</Link>
-          <Link to="/resources" className="nav-tab" onClick={() => setSelectedTab('Resources')}>Resources</Link>
-          <Link to="/reports" className="nav-tab" onClick={() => setSelectedTab('Reports')}>Reports</Link>
+        {!hideHeaderAndSearch && (
+          <nav className="tabs">
+            <Link to="/" className="nav-tab" onClick={() => setSelectedTab('Home')}>Home</Link>
+            <Link to="/inventory" className="nav-tab" onClick={() => setSelectedTab('Inventory Management')}>Inventory</Link>
+            <Link to="/inventory-management" className="nav-tab" onClick={() => setSelectedTab('Entries')}>Entries</Link>
+            <Link to="/resources" className="nav-tab" onClick={() => setSelectedTab('Resources')}>Resources</Link>
+            <Link to="/reports" className="nav-tab" onClick={() => setSelectedTab('Reports')}>Reports</Link>
 
-          <div className="search-bar">
-            <label htmlFor="search">Search Bar:</label>
-            <input type="text" id="search" />
-          </div>
-        </nav>
+            <div className="search-bar">
+              <label htmlFor="search">Search Bar:</label>
+              <input type="text" id="search" />
+            </div>
+          </nav>
+        )}
         
         <main>
           <Routes>
