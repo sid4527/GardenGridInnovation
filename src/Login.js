@@ -5,7 +5,7 @@ import './Login.css';
 const Login = () => {
   const [userId, setUserId] = useState('');
   const [password, setPassword] = useState('');
-  const navigate = useNavigate(); // Initialize navigate function
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -14,36 +14,38 @@ const Login = () => {
   };
 
   const handleGoHome = () => {
-    navigate('/'); // Redirect to home page
+    navigate('/');
   };
 
   return (
     <div className="login-container">
-      <h2>Garden Inventory App</h2>
-      <form onSubmit={handleSubmit}>
-        <div className="input-group">
-          <label htmlFor="userId">User Id:</label>
-          <input
-            type="text"
-            id="userId"
-            value={userId}
-            onChange={(e) => setUserId(e.target.value)}
-            required
-          />
-        </div>
-        <div className="input-group">
-          <label htmlFor="password">Password:</label>
-          <input
-            type="password"
-            id="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </div>
-        <button type="submit">Login</button>
-      </form>
-      <button onClick={handleGoHome}>Go to Home</button> {/* New Home button */}
+      <div className="login-card">
+        <h2>Garden Inventory App</h2>
+        <form onSubmit={handleSubmit}>
+          <div className="input-group">
+            <label htmlFor="userId">User Id:</label>
+            <input
+              type="text"
+              id="userId"
+              value={userId}
+              onChange={(e) => setUserId(e.target.value)}
+              required
+            />
+          </div>
+          <div className="input-group">
+            <label htmlFor="password">Password:</label>
+            <input
+              type="password"
+              id="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </div>
+          <button type="submit" className="login-button">Login</button>
+        </form>
+        <button onClick={handleGoHome} className="home-button">Go to Home</button>
+      </div>
     </div>
   );
 };

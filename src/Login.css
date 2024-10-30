@@ -1,48 +1,81 @@
-/* src/Login.css */
+/* Login.css */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: url('https://source.unsplash.com/featured/?garden') no-repeat center center fixed;
+  background-size: cover;
+}
+
 .login-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    background-color: #f4f4f9;
-  }
-  
-  h2 {
-    color: #4CAF50; /* Green color */
-    margin-bottom: 20px;
-  }
-  
-  form {
-    display: flex;
-    flex-direction: column;
-    width: 300px;
-  }
-  
-  .input-group {
-    margin-bottom: 15px;
-  }
-  
-  label {
-    margin-bottom: 5px;
-  }
-  
-  input {
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
-  
-  button {
-    padding: 10px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  button:hover {
-    background-color: #45a049;
-  }
-  
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  backdrop-filter: blur(5px);
+}
+
+.login-card {
+  background-color: rgba(255, 255, 255, 0.9);
+  padding: 30px;
+  max-width: 400px;
+  width: 100%;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.login-card h2 {
+  color: #4caf50;
+  font-size: 1.8em;
+  margin-bottom: 20px;
+}
+
+.input-group {
+  margin: 15px 0;
+  text-align: left;
+}
+
+.input-group label {
+  display: block;
+  font-size: 0.9em;
+  color: #333;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 1em;
+}
+
+.login-button,
+.home-button {
+  width: 100%;
+  padding: 10px;
+  margin-top: 15px;
+  font-size: 1em;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.login-button {
+  background-color: #4caf50;
+  color: #fff;
+}
+
+.login-button:hover {
+  background-color: #388e3c;
+}
+
+.home-button {
+  background-color: #ddd;
+  color: #333;
+}
+
+.home-button:hover {
+  background-color: #bbb;
+}
