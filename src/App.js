@@ -31,6 +31,11 @@ function App() {
         </header>
         
         <nav className="tabs">
+          <Link to="/" className="nav-tab" onClick={() => setSelectedTab('Home')}>Home</Link>
+          <Link to="/inventory" className="nav-tab" onClick={() => setSelectedTab('Inventory Management')}>Inventory</Link>
+          <Link to="/entries" className="nav-tab" onClick={() => setSelectedTab('Entries')}>Entries</Link>
+          <Link to="/resources" className="nav-tab" onClick={() => setSelectedTab('Resources')}>Resources</Link>
+          <Link to="/reports" className="nav-tab" onClick={() => setSelectedTab('Reports')}>Reports</Link>
 
           <div className="search-bar">
             <label htmlFor="search">Search Bar:</label>
