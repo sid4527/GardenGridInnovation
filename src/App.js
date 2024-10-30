@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import Home from './Home'; // Import Home component
 import Inventory from './Inventory';
+import Resources from './Resources'; // Import Resources page
 import InventoryManagement from './InventoryManagement';
 import CareScheduling from './CareScheduling';
 import GrowthTracking from './GrowthTracking';
@@ -34,7 +35,7 @@ function App() {
         <nav className="tabs">
           <Link to="/" className="nav-tab" onClick={() => setSelectedTab('Home')}>Home</Link>
           <Link to="/inventory" className="nav-tab" onClick={() => setSelectedTab('Inventory Management')}>Inventory</Link>
-          <Link to="/entries" className="nav-tab" onClick={() => setSelectedTab('Entries')}>Entries</Link>
+          <Link to="/inventory-management" className="nav-tab" onClick={() => setSelectedTab('Entries')}>Entries</Link>
           <Link to="/resources" className="nav-tab" onClick={() => setSelectedTab('Resources')}>Resources</Link>
           <Link to="/reports" className="nav-tab" onClick={() => setSelectedTab('Reports')}>Reports</Link>
 
@@ -49,6 +50,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/inventory" element={<Inventory />} />
             <Route path="/inventory-management" element={<InventoryManagement />} />
+            <Route path="/resources" element={<Resources />} /> {/* Resources route */}
             <Route path="/care-scheduling" element={<CareScheduling />} />
             <Route path="/growth-tracking" element={<GrowthTracking />} />
             <Route path="/login" element={<Login />} />
