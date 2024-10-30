@@ -11,7 +11,7 @@ function InventoryManagement() {
   };
 
   const handleLoginRedirect = () => {
-    navigate('/home');
+    navigate('/');
   };
 
   return (

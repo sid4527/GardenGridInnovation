@@ -11,7 +11,7 @@ function CareScheduling() {
   };
 
   const handleLoginRedirect = () => {
-    navigate('/home');
+    navigate('/');
   };
 
   return (

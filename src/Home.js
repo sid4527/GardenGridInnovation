@@ -10,7 +10,7 @@ function Home() {
       </main>
 
       <footer className="footer">
-        For technical support contact: <a href="mailto:222@garden.com">222@garden.com</a> or call 333-333-3333
+        For technical support contact: <a href="mailto:222@garden.com">222@garden.com</a> or call 333-333-2222
       </footer>
     </div>
   );
