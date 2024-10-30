@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import Home from './Home'; // Import Home component
+import Inventory from './Inventory';
 import InventoryManagement from './InventoryManagement';
 import CareScheduling from './CareScheduling';
 import GrowthTracking from './GrowthTracking';
@@ -46,7 +47,8 @@ function App() {
         <main>
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/inventory" element={<InventoryManagement />} />
+            <Route path="/inventory" element={<Inventory />} />
+            <Route path="/inventory-management" element={<InventoryManagement />} />
             <Route path="/care-scheduling" element={<CareScheduling />} />
             <Route path="/growth-tracking" element={<GrowthTracking />} />
             <Route path="/login" element={<Login />} />
