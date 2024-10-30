@@ -55,6 +55,20 @@ footer {
   opacity: 0.8; /* Slightly dim on hover */
 }
 
+.search-bar {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+}
+
+.search-bar label {
+  margin-right: 5px;
+}
+
+.search-bar input {
+  padding: 5px;
+}
+
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
