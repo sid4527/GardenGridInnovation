@@ -1,0 +1,40 @@
+.inventory-management {
+    padding: 20px;
+    text-align: left;
+  }
+  
+  .new-entry-button {
+    background-color: #b3e6a1;
+    border: none;
+    padding: 8px 12px;
+    cursor: pointer;
+    margin-bottom: 20px;
+  }
+  
+  .entry-form {
+    display: grid;
+    gap: 10px;
+    margin-top: 20px;
+  }
+  
+  .entry-form label {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+  
+  th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+  }
+  
+  th {
+    background-color: #f4f4f4;
+  }
+  
