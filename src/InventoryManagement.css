@@ -4,7 +4,7 @@
   }
   
   .new-entry-button {
-    background-color: #b3e6a1;
+    background-color: blue;
     border: none;
     padding: 8px 12px;
     cursor: pointer;
@@ -24,12 +24,16 @@
 
   .login-button {
     margin-top: 20px;
-    background-color: #b3e6a1;
+    background-color: blue;
     border: none;
     padding: 8px 12px;
     cursor: pointer;
     font-size: 16px;
   }  
+
+  nav-tab {
+    background-color: black;
+  }
   
   table {
     width: 100%;
