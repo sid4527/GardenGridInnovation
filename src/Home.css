@@ -1,0 +1,67 @@
+/* Home.css */
+
+.home {
+    text-align: center;
+  }
+  
+  .header {
+    background-color: #b3e6a1;
+    padding: 20px;
+  }
+  
+  .header h1 {
+    color: #333;
+    font-size: 2em;
+  }
+  
+  .tabs {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f4f4f4;
+    padding: 10px;
+    gap: 15px;
+  }
+  
+  .tab {
+    background-color: transparent;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  .tab:hover {
+    font-weight: bold;
+    color: black;
+  }
+  
+  .search-bar {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+  }
+  
+  .search-bar label {
+    margin-right: 5px;
+  }
+  
+  .search-bar input {
+    padding: 5px;
+  }
+  
+  .main-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 300px;
+    margin-top: 20px;
+    font-size: 1.2em;
+    color: #666;
+  }
+  
+  .footer {
+    margin-top: 20px;
+    color: #666;
+    font-size: 14px;
+  }
+  
