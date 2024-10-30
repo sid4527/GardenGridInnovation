@@ -1,3 +1,36 @@
+.header {
+    background-color: #b3e6a1;
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .tabs {
+    display: flex;
+    justify-content: center;
+    background-color: #f4f4f4;
+    padding: 10px;
+    gap: 15px;
+  }
+  
+  .tab {
+    background-color: transparent;
+    color: black;
+    text-decoration: none;
+    font-size: 16px;
+    padding: 8px 16px;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .tab:hover, .tab:focus {
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .content {
+    padding: 20px;
+  }  
+
 .inventory-management {
     padding: 20px;
     text-align: left;
