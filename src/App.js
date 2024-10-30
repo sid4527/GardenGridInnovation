@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
-import Home from './Home'; // Import Home component
+import { BrowserRouter as Router, Route, Routes, Link, useLocation } from 'react-router-dom';
+import Home from './Home';
 import Inventory from './Inventory';
-import Resources from './Resources'; // Import Resources page
-import Reports from './Reports'; // Import Reports page
+import Resources from './Resources';
+import Reports from './Reports';
 import InventoryManagement from './InventoryManagement';
 import CareScheduling from './CareScheduling';
 import GrowthTracking from './GrowthTracking';
@@ -12,6 +12,11 @@ import './App.css';
 
 function App() {
   const [selectedTab, setSelectedTab] = useState('Home');
+  const location = useLocation(); // Get the current location
+
+  // Determine if the header should be hidden on specific routes
+  const hideHeaderRoutes = ['/inventory-management', '/care-scheduling', '/growth-tracking'];
+  const shouldHideHeader = hideHeaderRoutes.includes(location.pathname);
 
   const renderContent = () => {
     switch (selectedTab) {
@@ -22,17 +27,19 @@ function App() {
       case 'Growth Tracking':
         return <GrowthTracking />;
       default:
-        return <Home />; // Default to Home page
+        return <Home />;
     }
   };
 
   return (
     <Router>
       <div className="app">
-        <header>
-          <h1>Garden Grid</h1>
-        </header>
-        
+        {!shouldHideHeader && (
+          <header>
+            <h1>Garden Grid</h1>
+          </header>
+        )}
+
         <nav className="tabs">
           <Link to="/" className="nav-tab" onClick={() => setSelectedTab('Home')}>Home</Link>
           <Link to="/inventory" className="nav-tab" onClick={() => setSelectedTab('Inventory Management')}>Inventory</Link>
