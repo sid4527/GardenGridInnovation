@@ -4,29 +4,35 @@ import './Reports.css';
 function Reports() {
   return (
     <div className="reports">
+      <header className="header">
+        <h1>Reports Dashboard</h1>
+        <p>Access detailed reports and insights to manage your garden inventory efficiently.</p>
+      </header>
         
       <main className="content">
         <h2>Reports Menu</h2>
 
-        <section className="report-section">
-          <h3>Administrator Reports</h3>
-          <ul>
-            <li>Sales Report</li>
-            <li>Inventory Overview Report</li>
-          </ul>
-        </section>
+        <div className="report-grid">
+          <section className="report-card">
+            <h3>Administrator Reports</h3>
+            <ul>
+              <li>Sales Report</li>
+              <li>Inventory Overview Report</li>
+            </ul>
+          </section>
 
-        <section className="report-section">
-          <h3>Management Reports</h3>
-          <ul>
-            <li>Plant Health Report</li>
-            <li>Customer Order Report</li>
-            <li>Maintenance Schedule Report</li>
-          </ul>
-        </section>
+          <section className="report-card">
+            <h3>Management Reports</h3>
+            <ul>
+              <li>Plant Health Report</li>
+              <li>Customer Order Report</li>
+              <li>Maintenance Schedule Report</li>
+            </ul>
+          </section>
+        </div>
 
         <div className="export-section">
-          <p>The button below will be an option on each report</p>
+          <p>Click below to export any report as a CSV file:</p>
           <button className="export-button">Export to CSV</button>
         </div>
       </main>
