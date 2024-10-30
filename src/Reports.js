@@ -4,10 +4,7 @@ import './Reports.css';
 function Reports() {
   return (
     <div className="reports">
-      <header className="header">
-        <h1>Garden Grid</h1>
-      </header>
-
+        
       <main className="content">
         <h2>Reports Menu</h2>
 
