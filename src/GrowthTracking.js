@@ -11,7 +11,7 @@ function GrowthTracking() {
   };
 
   const handleLoginRedirect = () => {
-    navigate('/home');
+    navigate('/');
   };
 
   return (

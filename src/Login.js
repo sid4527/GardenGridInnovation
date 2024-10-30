@@ -14,7 +14,7 @@ const Login = () => {
   };
 
   const handleGoHome = () => {
-    navigate('/home'); // Redirect to home page
+    navigate('/'); // Redirect to home page
   };
 
   return (
