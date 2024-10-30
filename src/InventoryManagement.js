@@ -11,7 +11,7 @@ function InventoryManagement() {
   };
 
   const handleLoginRedirect = () => {
-    navigate('/login');
+    navigate('/home');
   };
 
   return (
@@ -65,7 +65,7 @@ function InventoryManagement() {
 
         {/* Button to redirect to login page */}
         <button className="login-button" onClick={handleLoginRedirect}>
-          Back to Login
+          Back to Home
         </button>
       </div>
     </div>

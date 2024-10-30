@@ -1,16 +1,20 @@
-// src/Login.js
-
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './Login.css';
 
 const Login = () => {
   const [userId, setUserId] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate(); // Initialize navigate function
 
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log('User ID:', userId, 'Password:', password);
     // Handle authentication logic here
+  };
+
+  const handleGoHome = () => {
+    navigate('/home'); // Redirect to home page
   };
 
   return (
@@ -39,6 +43,7 @@ const Login = () => {
         </div>
         <button type="submit">Login</button>
       </form>
+      <button onClick={handleGoHome}>Go to Home</button> {/* New Home button */}
     </div>
   );
 };
