@@ -1,0 +1,104 @@
+/* Inventory.css */
+
+.inventory {
+    text-align: center;
+    padding: 20px;
+  }
+  
+  .header {
+    background-color: #b3e6a1;
+    padding: 20px;
+  }
+  
+  .header h1 {
+    color: #333;
+    font-size: 2em;
+  }
+  
+  .tabs {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f4f4f4;
+    padding: 10px;
+    gap: 15px;
+  }
+  
+  .tab {
+    background-color: transparent;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  .tab.active {
+    font-weight: bold;
+    color: black;
+  }
+  
+  .search-bar {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+  }
+  
+  .search-bar label {
+    margin-right: 5px;
+  }
+  
+  .search-bar input {
+    padding: 5px;
+  }
+  
+  .filter-sort-section {
+    display: flex;
+    justify-content: space-around;
+    margin: 20px 0;
+  }
+  
+  .filter-group, .sort-group {
+    width: 45%;
+    text-align: left;
+  }
+  
+  .filter-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  
+  .filter-item {
+    flex: 1 1 22%;
+  }
+  
+  .filter-item label {
+    display: block;
+    font-weight: bold;
+  }
+  
+  .filter-item select {
+    width: 100%;
+    padding: 5px;
+  }
+  
+  .inventory-content {
+    margin-top: 20px;
+    font-size: 1.2em;
+    color: #666;
+  }
+  
+  .export-button {
+    margin-top: 20px;
+    background-color: #b3e6a1;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  .footer {
+    margin-top: 20px;
+    color: #666;
+    font-size: 14px;
+  }
+  
