@@ -1,18 +1,24 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate from react-router-dom
 import './InventoryManagement.css';
 
 function InventoryManagement() {
   const [showForm, setShowForm] = useState(false);
+  const navigate = useNavigate(); // Initialize the navigate function
 
   const handleNewEntry = () => {
     setShowForm(!showForm);
+  };
+
+  const handleLoginRedirect = () => {
+    navigate('/login'); // Navigate to the login page
   };
 
   return (
     <div className="inventory-management">
       <h2>Inventory Management</h2>
       <button className="new-entry-button" onClick={handleNewEntry}>+ New Entry</button>
-      
+
       <table>
         <thead>
           <tr>
@@ -45,6 +51,11 @@ function InventoryManagement() {
           </label>
         </div>
       )}
+
+      {/* Button to redirect to login page */}
+      <button className="login-button" onClick={handleLoginRedirect}>
+        Back to Login
+      </button>
     </div>
   );
 }
