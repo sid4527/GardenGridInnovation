@@ -5,7 +5,6 @@ import { FaChevronDown, FaFileExport } from 'react-icons/fa';
 function Inventory() {
   return (
     <div className="inventory">
-      <h1 className="inventory-title">Garden Inventory</h1>
       
       <div className="filter-sort-section">
         <div className="filter-group">

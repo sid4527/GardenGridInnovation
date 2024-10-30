@@ -1,67 +1,75 @@
-/* Home.css */
-
 .home {
-    text-align: center;
-  }
-  
-  .header {
-    background-color: #b3e6a1;
-    padding: 20px;
-  }
-  
-  .header h1 {
-    color: #333;
-    font-size: 2em;
-  }
-  
-  .tabs {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #f4f4f4;
-    padding: 10px;
-    gap: 15px;
-  }
-  
-  .tab {
-    background-color: black;
-    border: none;
-    font-size: 16px;
-    cursor: pointer;
-  }
-  
-  .tab:hover {
-    font-weight: bold;
-    color: black;
-  }
-  
-  .search-bar {
-    margin-left: auto;
-    display: flex;
-    align-items: center;
-  }
-  
-  .search-bar label {
-    margin-right: 5px;
-  }
-  
-  .search-bar input {
-    padding: 5px;
-  }
-  
-  .main-content {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 300px;
-    margin-top: 20px;
-    font-size: 1.2em;
-    color: #666;
-  }
-  
-  .footer {
-    margin-top: 20px;
-    color: #666;
-    font-size: 14px;
-  }
-  
+  font-family: Arial, sans-serif;
+  color: #333;
+  background-color: #f3f4f6;
+}
+
+.hero-section {
+  text-align: center;
+  padding: 40px 20px;
+  background-color: #4caf50;
+  color: #fff;
+}
+
+.hero-section h1 {
+  font-size: 2.5em;
+  margin-bottom: 10px;
+}
+
+.hero-section p {
+  font-size: 1.2em;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.main-content {
+  padding: 40px 20px;
+  text-align: center;
+}
+
+.main-content h2 {
+  color: #4caf50;
+  font-size: 1.8em;
+  margin-bottom: 20px;
+}
+
+.image-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 20px;
+  padding: 20px 0;
+}
+
+.image-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  font-size: 2em;
+  color: #4caf50;
+  transition: transform 0.2s ease;
+}
+
+.image-item:hover {
+  transform: scale(1.05);
+}
+
+.footer {
+  text-align: center;
+  padding: 20px;
+  background-color: #333;
+  color: #fff;
+  font-size: 0.9em;
+}
+
+.footer a {
+  color: #4caf50;
+  text-decoration: none;
+}
+
+.footer a:hover {
+  text-decoration: underline;
+}
