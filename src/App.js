@@ -13,12 +13,10 @@ import './App.css';
 function App() {
   const [selectedTab, setSelectedTab] = useState('Home');
 
-  // Function to check if the current path is one of the excluded pages
-  const useHideHeaderAndSearch = () => {
-    const location = useLocation();
-    const excludedPaths = ['/care-scheduling', '/inventory-management', '/growth-tracking', '/login'];
-    return excludedPaths.includes(location.pathname);
-  };
+  // Set up location hook inside Router context
+  const location = useLocation();
+  const excludedPaths = ['/care-scheduling', '/inventory-management', '/growth-tracking', '/login'];
+  const hideHeaderAndSearch = excludedPaths.includes(location.pathname);
 
   const renderContent = () => {
     switch (selectedTab) {
@@ -32,8 +30,6 @@ function App() {
         return <Home />;
     }
   };
-
-  const hideHeaderAndSearch = useHideHeaderAndSearch();
 
   return (
     <Router>
