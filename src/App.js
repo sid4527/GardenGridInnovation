@@ -30,9 +30,9 @@ function App() {
         </header>
         
         <nav className="tabs">
-          <button onClick={() => setSelectedTab('Inventory Management')}>Inventory Management</button>
-          <button onClick={() => setSelectedTab('Care Scheduling')}>Care Scheduling</button>
-          <button onClick={() => setSelectedTab('Growth Tracking')}>Growth Tracking</button>
+          <button class="nav-tab" onClick={() => setSelectedTab('Inventory Management')}>Inventory Management</button>
+          <button class="nav-tab" onClick={() => setSelectedTab('Care Scheduling')}>Care Scheduling</button>
+          <button class="nav-tab" onClick={() => setSelectedTab('Growth Tracking')}>Growth Tracking</button>
         </nav>
         
         <main>
