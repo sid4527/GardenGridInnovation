@@ -4,9 +4,6 @@ import './Home.css';
 function Home() {
   return (
     <div className="home">
-      <header className="header">
-        <h1>Garden Grid</h1>
-      </header>
 
       <nav className="tabs">
         <button className="tab">Home</button>
@@ -15,10 +12,6 @@ function Home() {
         <button className="tab">Resources</button>
         <button className="tab">Reports</button>
 
-        <div className="search-bar">
-          <label htmlFor="search">Search Bar:</label>
-          <input type="text" id="search" />
-        </div>
       </nav>
 
       <main className="main-content">
