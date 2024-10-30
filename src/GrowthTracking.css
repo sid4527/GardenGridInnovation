@@ -1,0 +1,141 @@
+.growth-tracking {
+    font-family: Arial, sans-serif;
+    color: #333;
+    padding: 20px;
+    background-color: #f4f8f5;
+  }
+  
+  .header {
+    text-align: center;
+    color: #4caf50;
+  }
+  
+  .header h2 {
+    font-size: 2em;
+    margin-bottom: 20px;
+  }
+  
+  .tabs {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 20px;
+  }
+  
+  .tab {
+    color: #4caf50;
+    font-size: 1em;
+    text-decoration: none;
+    padding: 10px 15px;
+    border: 2px solid #4caf50;
+    border-radius: 5px;
+    transition: background-color 0.3s, color 0.3s;
+  }
+  
+  .tab:hover {
+    background-color: #4caf50;
+    color: #fff;
+  }
+  
+  .content {
+    text-align: center;
+  }
+  
+  .new-entry-button {
+    margin: 20px 0;
+    padding: 10px 20px;
+    background-color: #4caf50;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .new-entry-button:hover {
+    background-color: #388e3c;
+  }
+  
+  .growth-table {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+  }
+  
+  .growth-table th,
+  .growth-table td {
+    padding: 10px 15px;
+    border: 1px solid #ddd;
+    text-align: left;
+  }
+  
+  .growth-table th {
+    background-color: #4caf50;
+    color: #fff;
+  }
+  
+  .entry-form {
+    margin: 20px auto;
+    max-width: 500px;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+  }
+  
+  .entry-form h3 {
+    color: #4caf50;
+    margin-bottom: 15px;
+  }
+  
+  .entry-form label {
+    display: block;
+    margin: 10px 0;
+    font-size: 1em;
+  }
+  
+  .entry-form input,
+  .entry-form select {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+  
+  .submit-button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #4caf50;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .submit-button:hover {
+    background-color: #388e3c;
+  }
+  
+  .login-button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #f44336;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .login-button:hover {
+    background-color: #d32f2f;
+  }
+  
