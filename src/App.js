@@ -10,42 +10,28 @@ import GrowthTracking from './GrowthTracking';
 import Login from './Login';
 import './App.css';
 
-function Layout() {
-  const location = useLocation();
-  const excludedPaths = ['/care-scheduling', '/inventory-management', '/growth-tracking', '/login'];
-  const hideHeaderAndSearch = excludedPaths.includes(location.pathname);
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { apiResponse: "" };
+  }
 
-  return (
-    <>
-      {!hideHeaderAndSearch && (
-        <header>
-          <h1>Garden Grid</h1>
-        </header>
-      )}
-      
-      {!hideHeaderAndSearch && (
-        <nav className="tabs">
-          <Link to="/" className="nav-tab">Home</Link>
-          <Link to="/inventory" className="nav-tab">Inventory</Link>
-          <Link to="/inventory-management" className="nav-tab">Entries</Link>
-          <Link to="/resources" className="nav-tab">Resources</Link>
-          <Link to="/reports" className="nav-tab">Reports</Link>
+  // Define callAPI as a class method
+  callAPI = () => {
+    fetch("http://localhost:9000/api/inventory")
+      .then(res => res.text())
+      .then(res => this.setState({ apiResponse: res }));
+  }
 
-          <div className="search-bar">
-            <label htmlFor="search">Search Bar:</label>
-            <input type="text" id="search" />
-          </div>
-        </nav>
-      )}
-    </>
-  );
-}
+  // Use componentDidMount instead of componentWillMount
+  componentDidMount() {
+    this.callAPI();
+  }
 
-function App() {
-  return (
-    <Router>
-      <div className="app">
-        <Layout />
+  render() {
+    return (
+      <Router>
+        <div className="app">
         <main>
           <Routes>
             <Route path="/" element={<Home />} />
@@ -58,13 +44,10 @@ function App() {
             <Route path="/login" element={<Login />} />
           </Routes>
         </main>
-        
-        <footer>
-          For technical support contact: <a href="mailto:222@garden.com">222@garden.com</a> or call 333-333-3333
-        </footer>
-      </div>
-    </Router>
-  );
+        </div>
+      </Router>
+    );
+  }
 }
 
 export default App;

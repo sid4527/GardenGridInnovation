@@ -4,6 +4,12 @@ import './CareScheduling.css';
 
 function CareScheduling() {
   const [showForm, setShowForm] = useState(false);
+  const [formData, setFormData] = useState({
+    date: '',
+    plant: 'Rose Bush',
+    careType: 'Watering',
+    notes: '',
+  });
   const navigate = useNavigate();
 
   const handleNewEntry = () => {
@@ -12,6 +18,42 @@ function CareScheduling() {
 
   const handleLoginRedirect = () => {
     navigate('/');
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await fetch('http://localhost:9000/api/care-tasks', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          TaskDate: formData.date,
+          PlantName: formData.plant,
+          CareType: formData.careType,
+          Status: 'Pending', // Default status on submission
+          Notes: formData.notes,
+        }),
+      });
+
+      if (response.ok) {
+        console.log('New care task added successfully');
+        setShowForm(false); // Hide the form after successful submission
+        setFormData({ date: '', plant: 'Rose Bush', careType: 'Watering', notes: '' }); // Reset the form
+        // Optionally, refresh the table to show the new entry
+      } else {
+        console.error('Failed to add new care task');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
   };
 
   return (
@@ -59,28 +101,30 @@ function CareScheduling() {
         {showForm && (
           <div className="entry-form">
             <h3>Add New Care Task</h3>
-            <label>
-              Date: <input type="date" />
-            </label>
-            <label>
-              Plant:
-              <select>
-                <option value="rose">Rose Bush</option>
-                <option value="lavender">Lavender</option>
-              </select>
-            </label>
-            <label>
-              Care Type:
-              <select>
-                <option value="watering">Watering</option>
-                <option value="fertilizing">Fertilizing</option>
-                <option value="pruning">Pruning</option>
-              </select>
-            </label>
-            <label>
-              Notes: <input type="text" placeholder="Any special notes..." />
-            </label>
-            <button className="submit-button">Submit</button>
+            <form onSubmit={handleSubmit}>
+              <label>
+                Date: <input type="date" name="date" value={formData.date} onChange={handleChange} required />
+              </label>
+              <label>
+                Plant:
+                <select name="plant" value={formData.plant} onChange={handleChange}>
+                  <option value="Rose Bush">Rose Bush</option>
+                  <option value="Lavender">Lavender</option>
+                </select>
+              </label>
+              <label>
+                Care Type:
+                <select name="careType" value={formData.careType} onChange={handleChange}>
+                  <option value="Watering">Watering</option>
+                  <option value="Fertilizing">Fertilizing</option>
+                  <option value="Pruning">Pruning</option>
+                </select>
+              </label>
+              <label>
+                Notes: <input type="text" name="notes" value={formData.notes} onChange={handleChange} placeholder="Any special notes..." />
+              </label>
+              <button type="submit" className="submit-button">Submit</button>
+            </form>
           </div>
         )}
 
