@@ -1,0 +1,16 @@
+CREATE TABLE Inventory (
+    id INT PRIMARY KEY IDENTITY(1,1), -- Auto-incremented ID for each entry
+    date DATE NOT NULL,               -- Date of entry
+    item NVARCHAR(50) NOT NULL,       -- Name of the inventory item
+    quantity INT NOT NULL,            -- Quantity of the item
+    condition NVARCHAR(50) NOT NULL   -- Condition of the item (e.g., Healthy)
+);
+
+INSERT INTO Inventory (date, item, quantity, condition)
+VALUES 
+  ('2024-10-31', 'Rose', 15, 'Healthy'),
+  ('2024-10-31', 'Water Lilly', 20, 'Healthy'),
+  ('2024-11-02', 'Dahlia', 15, 'Healthy'),
+  ('2024-11-02', 'Iris', 20, 'Healthy'),
+  ('2024-11-04', 'Sunflower', 15, 'Healthy'),
+  ('2024-11-04', 'Lavender', 20, 'Healthy');

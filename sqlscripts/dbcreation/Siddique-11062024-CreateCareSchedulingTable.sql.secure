@@ -1,0 +1,12 @@
+CREATE TABLE CareTasks (
+    TaskID INT PRIMARY KEY IDENTITY(1,1),  -- Auto-incrementing primary key
+    TaskDate DATE NOT NULL,                -- Date of the care task
+    PlantName NVARCHAR(100) NOT NULL,      -- Name of the plant
+    CareType NVARCHAR(50) NOT NULL,        -- Type of care (e.g., Watering, Fertilizing)
+    Status NVARCHAR(20) DEFAULT 'Pending', -- Status of the task (e.g., Completed, Pending), defaulting to "Pending"
+    Notes NVARCHAR(255)                    -- Optional notes for the care task
+);
+
+
+INSERT INTO CareTasks (TaskDate, PlantName, CareType, Status, Notes)
+VALUES ('2024-11-01', 'Rose Bush', 'Watering', 'Completed', 'Watered thoroughly');

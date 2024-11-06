@@ -1,0 +1,11 @@
+CREATE TABLE GrowthRecords (
+    RecordID INT PRIMARY KEY IDENTITY(1,1), -- Auto-incrementing primary key
+    RecordDate DATE NOT NULL,               -- Date of the growth record
+    PlantName NVARCHAR(100) NOT NULL,       -- Name of the plant
+    HeightCM DECIMAL(5, 2),                 -- Height of the plant in centimeters, allowing for decimals
+    Notes NVARCHAR(255)                     -- Optional notes for observations on the plant's growth
+);
+
+
+INSERT INTO GrowthRecords (RecordDate, PlantName, HeightCM, Notes)
+VALUES ('2024-11-01', 'Rose Bush', 30.00, 'Healthy growth observed');
