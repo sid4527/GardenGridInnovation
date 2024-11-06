@@ -1,9 +1,14 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import axios from 'axios';
 import './InventoryManagement.css';
 
 function InventoryManagement() {
   const [showForm, setShowForm] = useState(false);
+  const [date, setDate] = useState('');
+  const [item, setItem] = useState('Rose Bush');
+  const [quantity, setQuantity] = useState('');
+  const [condition, setCondition] = useState('Healthy');
   const navigate = useNavigate();
 
   const handleNewEntry = () => {
@@ -12,6 +17,29 @@ function InventoryManagement() {
 
   const handleLoginRedirect = () => {
     navigate('/');
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    // Prepare the data to send to the backend
+    const newEntry = {
+      date,
+      item,
+      quantity: parseInt(quantity), // Ensure quantity is a number
+      condition,
+    };
+
+    try {
+      // Send the data to the backend API
+      await axios.post('http://localhost:9000/api/inventory', newEntry);
+      alert('New inventory item added successfully!');
+      setShowForm(false);
+      // Optionally, reload or refresh the data in your table here
+    } catch (error) {
+      console.error('Error adding new inventory item:', error);
+      alert('Failed to add new inventory item.');
+    }
   };
 
   return (
@@ -59,27 +87,40 @@ function InventoryManagement() {
         {showForm && (
           <div className="entry-form">
             <h3>Add New Inventory Item</h3>
-            <label>
-              Date: <input type="date" />
-            </label>
-            <label>
-              Item:
-              <select>
-                <option value="item1">Rose Bush</option>
-                <option value="item2">Lavender</option>
-              </select>
-            </label>
-            <label>
-              Quantity: <input type="number" />
-            </label>
-            <label>
-              Condition:
-              <select>
-                <option value="healthy">Healthy</option>
-                <option value="needs-attention">Needs Attention</option>
-              </select>
-            </label>
-            <button className="submit-button">Submit</button>
+            <form onSubmit={handleSubmit}>
+              <label>
+                Date:
+                <input type="date" value={date} onChange={(e) => setDate(e.target.value)} required />
+              </label>
+              <label>
+                Item:
+                <select value={item} onChange={(e) => setItem(e.target.value)}>
+                  <option value="Rose Bush">Rose Bush</option>
+                  <option value="Lavender">Lavender</option>
+                  <option value="Carnation">Carnation</option>
+                  <option value="Marigold">Marigold</option>
+                  <option value="Begonia">Begonia</option>
+                  <option value="Daffodil">Daffodil</option>
+                </select>
+              </label>
+              <label>
+                Quantity:
+                <input
+                  type="number"
+                  value={quantity}
+                  onChange={(e) => setQuantity(e.target.value)}
+                  required
+                />
+              </label>
+              <label>
+                Condition:
+                <select value={condition} onChange={(e) => setCondition(e.target.value)}>
+                  <option value="Healthy">Healthy</option>
+                  <option value="Needs Attention">Needs Attention</option>
+                </select>
+              </label>
+              <button type="submit" className="submit-button">Submit</button>
+            </form>
           </div>
         )}
 
