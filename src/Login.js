@@ -17,6 +17,10 @@ const Login = () => {
     navigate('/');
   };
 
+  const handleSignUp = () => {
+    navigate('/');
+  };
+
   return (
     <div className="login-container">
       <div className="login-card">
@@ -45,6 +49,7 @@ const Login = () => {
           <button type="submit" className="login-button">Login</button>
         </form>
         <button onClick={handleGoHome} className="home-button">Go to Home</button>
+        <button onClick={handleSignUp} className="home-button">Sign Up</button>
       </div>
     </div>
   );
