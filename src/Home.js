@@ -14,6 +14,7 @@ function Home() {
             <a href="/inventory-management">Entries</a>
             <a href="/resources">Resources</a>
             <a href="/reports">Reports</a>
+            <a href="/userprofiles">Userprofiles</a>
             <a href="/login">Log Out</a>
           </div>
         </div>

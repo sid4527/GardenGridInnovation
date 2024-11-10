@@ -7,8 +7,10 @@ import Reports from './Reports';
 import InventoryManagement from './InventoryManagement';
 import CareScheduling from './CareScheduling';
 import GrowthTracking from './GrowthTracking';
-import Login from './Login';
+import Login from './login';
 import './App.css';
+import UserProfile from  './UserProfie';
+import axios from 'axios';
 
 class App extends React.Component {
   constructor(props) {
@@ -18,9 +20,10 @@ class App extends React.Component {
 
   // Define callAPI as a class method
   callAPI = () => {
-    fetch("http://localhost:9000/api/inventory")
-      .then(res => res.text())
-      .then(res => this.setState({ apiResponse: res }));
+    // todo this code have bug
+    // fetch("http://localhost:9000/api/inventory")
+    //   .then(res => res.text())
+    //   .then(res => this.setState({ apiResponse: res }));
   }
 
   // Use componentDidMount instead of componentWillMount
@@ -42,6 +45,21 @@ class App extends React.Component {
             <Route path="/care-scheduling" element={<CareScheduling />} />
             <Route path="/growth-tracking" element={<GrowthTracking />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/userprofiles" element={ 
+                // <div>
+                //   <h1>User Profiles</h1>
+                //   {/* {error && <p>{error}</p>} */}
+                //   <ul>
+                //     {userData.map((user) => (
+                //       <li key={user.UserID}>
+                //         {user.Username} - {user.Email}
+                //       </li>
+                //     ))}
+                //   </ul>
+                // </div>
+                <UserProfile />
+              }
+            />
           </Routes>
         </main>
         </div>
