@@ -7,7 +7,7 @@ import Reports from './Reports';
 import InventoryManagement from './InventoryManagement';
 import CareScheduling from './CareScheduling';
 import GrowthTracking from './GrowthTracking';
-import Login from './login';
+import Login from './Login';
 import './App.css';
 import UserProfile from  './UserProfie';
 import axios from 'axios';
