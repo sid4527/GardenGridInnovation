@@ -28,7 +28,7 @@ function Home() {
 
       {/* Main Content */}
       <main className="main-content">
-        <h2>Featured Plants</h2>
+        <h2>Featured Plant</h2>
         <div className="image-grid">
           {/* Placeholder for plant images */}
           <div className="image-item">🌱</div>
