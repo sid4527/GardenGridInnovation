@@ -23,7 +23,7 @@ function Home() {
       {/* Hero Section */}
       <section className="hero-section">
         <h1>Bring Nature to Your Home!</h1>
-        <p>We are a studio based in New York, providing hassle-free backyard transformations with artistic solutions.</p>
+        <p>We are a studio based in New York, providing hassle-free backyard transformations with artistic solution.</p>
       </section>
 
       {/* Main Content */}
