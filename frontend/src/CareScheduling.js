@@ -1,23 +1,20 @@
 import React, { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
-import './CareScheduling.css';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 function CareScheduling() {
-  const [showForm, setShowForm] = useState(false);
-  const [formData, setFormData] = useState({
-    date: '',
-    plant: 'Rose Bush',
-    careType: 'Watering',
-    notes: '',
-  });
   const navigate = useNavigate();
+  const [showForm, setShowForm] = useState(false);
+  const [formData, setFormData] = useState({ date: '', plant: '', careType: '', notes: '' });
+  const [error, setError] = useState('');
+  const [tasks, setTasks] = useState([
+    { date: '2024-11-01', plant: 'Rose Bush', careType: 'Watering', status: 'Completed' },
+    { date: '2024-11-02', plant: 'Lavender', careType: 'Fertilizing', status: 'Pending' },
+  ]);
 
-  const handleNewEntry = () => {
+  const toggleForm = () => {
     setShowForm(!showForm);
-  };
-
-  const handleLoginRedirect = () => {
-    navigate('/');
+    setError('');
   };
 
   const handleChange = (e) => {
@@ -27,29 +24,16 @@ function CareScheduling() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    if (!formData.date || !formData.plant || !formData.careType) {
+      setError('All fields are required');
+      return;
+    }
     try {
-      const response = await fetch('http://localhost:9000/api/care-tasks', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          TaskDate: formData.date,
-          PlantName: formData.plant,
-          CareType: formData.careType,
-          Status: 'Pending', // Default status on submission
-          Notes: formData.notes,
-        }),
-      });
-
-      if (response.ok) {
-        console.log('New care task added successfully');
-        setShowForm(false); // Hide the form after successful submission
-        setFormData({ date: '', plant: 'Rose Bush', careType: 'Watering', notes: '' }); // Reset the form
-        // Optionally, refresh the table to show the new entry
-      } else {
-        console.error('Failed to add new care task');
+      const response = await axios.post('/api/care-scheduling', formData);
+      if (response.data.success) {
+        setTasks([...tasks, { ...formData, status: 'Pending' }]);
+        setShowForm(false);
+        setFormData({ date: '', plant: '', careType: '', notes: '' });
       }
     } catch (error) {
       console.error('Error:', error);
@@ -57,80 +41,73 @@ function CareScheduling() {
   };
 
   return (
-    <div className="care-scheduling">
+    <div className="care-scheduling" role="main">
       <header className="header">
-        <h2>Garden Grid Care Scheduling</h2>
+        <h1>Garden Grid Care Scheduling</h1>
       </header>
-
-      <nav className="tabs">
-        <Link to="/inventory-management" className="tab">Inventory Management</Link>
-        <Link to="/care-scheduling" className="tab">Care Scheduling</Link>
-        <Link to="/growth-tracking" className="tab">Growth Tracking</Link>
+      <nav aria-label="Navigation Tabs" className="tabs">
+        <a className="tab" href="/inventory-management">Inventory Management</a>
+        <a className="tab" href="/care-scheduling">Care Scheduling</a>
+        <a className="tab" href="/growth-tracking">Growth Tracking</a>
       </nav>
-
       <div className="content">
         <h2>Care Scheduling</h2>
-        <button className="new-entry-button" onClick={handleNewEntry}>+ New Entry</button>
-
-        <table className="scheduling-table">
-          <thead>
-            <tr>
-              <th>Date</th>
-              <th>Plant</th>
-              <th>Care Type</th>
-              <th>Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            {/* Placeholder rows */}
-            <tr>
-              <td>2024-11-01</td>
-              <td>Rose Bush</td>
-              <td>Watering</td>
-              <td>Completed</td>
-            </tr>
-            <tr>
-              <td>2024-11-02</td>
-              <td>Lavender</td>
-              <td>Fertilizing</td>
-              <td>Pending</td>
-            </tr>
-          </tbody>
-        </table>
-
+        <button className="new-entry-button" aria-expanded={showForm} onClick={toggleForm}>
+          + New Entry
+        </button>
         {showForm && (
-          <div className="entry-form">
+          <div className="entry-form" role="form">
             <h3>Add New Care Task</h3>
             <form onSubmit={handleSubmit}>
-              <label>
-                Date: <input type="date" name="date" value={formData.date} onChange={handleChange} required />
+              <label htmlFor="date">
+                Date:
+                <input type="date" id="date" name="date" value={formData.date} onChange={handleChange} required />
               </label>
-              <label>
+              <label htmlFor="plant">
                 Plant:
-                <select name="plant" value={formData.plant} onChange={handleChange}>
+                <select id="plant" name="plant" value={formData.plant} onChange={handleChange}>
                   <option value="Rose Bush">Rose Bush</option>
                   <option value="Lavender">Lavender</option>
                 </select>
               </label>
-              <label>
+              <label htmlFor="careType">
                 Care Type:
-                <select name="careType" value={formData.careType} onChange={handleChange}>
+                <select id="careType" name="careType" value={formData.careType} onChange={handleChange}>
                   <option value="Watering">Watering</option>
                   <option value="Fertilizing">Fertilizing</option>
                   <option value="Pruning">Pruning</option>
                 </select>
               </label>
-              <label>
-                Notes: <input type="text" name="notes" value={formData.notes} onChange={handleChange} placeholder="Any special notes..." />
+              <label htmlFor="notes">
+                Notes:
+                <input type="text" id="notes" name="notes" value={formData.notes} onChange={handleChange} placeholder="Any special notes..." />
               </label>
               <button type="submit" className="submit-button">Submit</button>
             </form>
+            {error && <p className="error">{error}</p>}
           </div>
         )}
-
-        <button className="login-button" onClick={handleLoginRedirect}>
-          Back to Home
-        </button>
+        <table className="scheduling-table" role="table">
+          <thead>
+            <tr>
+              <th scope="col">Date</th>
+              <th scope="col">Plant</th>
+              <th scope="col">Care Type</th>
+              <th scope="col">Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            {tasks.map((task, index) => (
+              <tr key={index}>
+                <td>{task.date}</td>
+                <td>{task.plant}</td>
+                <td>{task.careType}</td>
+                <td>{task.status}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        <button className="login-button" onClick={() => navigate('/')}>Back to Home</button>
       </div>
     </div>
   );
