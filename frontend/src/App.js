@@ -8,6 +8,7 @@ import InventoryManagement from './InventoryManagement';
 import CareScheduling from './CareScheduling';
 import GrowthTracking from './GrowthTracking';
 import Login from './Login';
+import SignupPage from './SignupPage'; // Import Signup page
 import './App.css';
 import UserProfile from  './UserProfie';
 import axios from 'axios';
@@ -45,6 +46,7 @@ class App extends React.Component {
             <Route path="/care-scheduling" element={<CareScheduling />} />
             <Route path="/growth-tracking" element={<GrowthTracking />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<SignupPage />} /> {/* Added signup route */}
             <Route path="/userprofiles" element={ 
                 // <div>
                 //   <h1>User Profiles</h1>

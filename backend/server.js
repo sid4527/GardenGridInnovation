@@ -2,6 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const sql = require('mssql');
 const cors = require('cors');
+const bcrypt = require('bcrypt');
 const inventoryRoutes = require('./inventory/inventory.routes');
 
 const app = express();
@@ -9,7 +10,7 @@ const port = 9000;
 
 // CORS configuration
 app.use(cors({
-    origin: 'http://localhost:3000', // Allow only the frontend origin
+    origin: 'http://localhost:3000',
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],
 }));
@@ -29,14 +30,17 @@ const dbConfig = {
     },
 };
 
-// Connect to the database
-sql.connect(dbConfig, (err) => {
-    if (err) {
-        console.error('Database connection failed:', err);
-    } else {
+// Create a global pool promise
+const poolPromise = new sql.ConnectionPool(dbConfig)
+    .connect()
+    .then(pool => {
         console.log('Database connected successfully');
-    }
-});
+        return pool;
+    })
+    .catch(err => {
+        console.error('Database connection failed:', err.message);
+        throw err;
+    });
 
 // Root route
 app.get('/', (req, res) => {
@@ -46,62 +50,82 @@ app.get('/', (req, res) => {
 // Use the inventory routes
 app.use('/api/inventory', inventoryRoutes);
 
-// Route to get all items from the inventory table
-app.get('/api/inventory/items', async (req, res) => {
+// Route to handle user sign-up
+app.post('/api/users', async (req, res) => {
+    const { userId, password, email } = req.body;
+
+    if (!userId || !password || !email) {
+        return res.status(400).json({ message: 'All fields are required' });
+    }
+
     try {
-        const pool = await sql.connect(dbConfig);
-        const result = await pool.request().query('SELECT item FROM inventory');
-        res.json(result.recordset); // Sends only the item column
+        const passwordHash = await bcrypt.hash(password, 10);
+        const pool = await poolPromise;
+
+        const checkUserQuery = `
+            SELECT COUNT(*) AS UserCount 
+            FROM Users 
+            WHERE UserId = @UserId OR Email = @Email
+        `;
+        const userExists = await pool.request()
+            .input('UserId', sql.NVarChar, userId)
+            .input('Email', sql.NVarChar, email)
+            .query(checkUserQuery);
+
+        if (userExists.recordset[0].UserCount > 0) {
+            return res.status(400).json({ message: 'UserId or Email already exists' });
+        }
+
+        const insertUserQuery = `
+            INSERT INTO Users (UserId, PasswordHash, Email)
+            VALUES (@UserId, @PasswordHash, @Email)
+        `;
+        await pool.request()
+            .input('UserId', sql.NVarChar, userId)
+            .input('PasswordHash', sql.NVarChar, passwordHash)
+            .input('Email', sql.NVarChar, email)
+            .query(insertUserQuery);
+
+        res.status(201).json({ message: 'Sign-up successful!' });
     } catch (error) {
-        console.error('Database error:', error);
-        res.status(500).json({ error: 'Failed to fetch inventory items' });
+        console.error('Sign-up error:', error.message);
+        res.status(500).json({ message: 'An error occurred during sign-up. Please try again.' });
     }
 });
 
-// Route to handle adding a new growth record
-app.post('/api/growth-records', async (req, res) => {
-    const { RecordDate, PlantName, HeightCM, Notes } = req.body;
+// Route to handle user login
+app.post('/api/login', async (req, res) => {
+    const { userId, password } = req.body;
 
-    try {
-        const pool = await sql.connect(dbConfig);
-        await pool.request()
-            .input('RecordDate', sql.Date, RecordDate)
-            .input('PlantName', sql.NVarChar, PlantName)
-            .input('HeightCM', sql.Decimal(5, 2), HeightCM)
-            .input('Notes', sql.NVarChar, Notes)
-            .query(`
-                INSERT INTO GrowthRecords (RecordDate, PlantName, HeightCM, Notes)
-                VALUES (@RecordDate, @PlantName, @HeightCM, @Notes)
-            `);
-
-        res.status(201).json({ message: 'Growth record added successfully' });
-    } catch (error) {
-        console.error('Database error:', error);
-        res.status(500).json({ message: 'Error adding growth record' });
+    if (!userId || !password) {
+        return res.status(400).json({ message: 'All fields are required' });
     }
-});
-
-// Route to handle adding a new care task
-app.post('/api/care-tasks', async (req, res) => {
-    const { TaskDate, PlantName, CareType, Status, Notes } = req.body;
 
     try {
-        const pool = await sql.connect(dbConfig);
-        await pool.request()
-            .input('TaskDate', sql.Date, TaskDate)
-            .input('PlantName', sql.NVarChar, PlantName)
-            .input('CareType', sql.NVarChar, CareType)
-            .input('Status', sql.NVarChar, Status || 'Pending') // Default to 'Pending' if Status is not provided
-            .input('Notes', sql.NVarChar, Notes)
-            .query(`
-                INSERT INTO CareTasks (TaskDate, PlantName, CareType, Status, Notes)
-                VALUES (@TaskDate, @PlantName, @CareType, @Status, @Notes)
-            `);
+        const pool = await poolPromise;
 
-        res.status(201).json({ message: 'Care task added successfully' });
+        const query = `
+            SELECT * FROM Users WHERE UserId = @UserId
+        `;
+        const result = await pool.request()
+            .input('UserId', sql.NVarChar, userId)
+            .query(query);
+
+        if (result.recordset.length === 0) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        const user = result.recordset[0];
+        const isPasswordValid = await bcrypt.compare(password, user.PasswordHash);
+
+        if (!isPasswordValid) {
+            return res.status(401).json({ message: 'Invalid credentials' });
+        }
+
+        res.status(200).json({ message: 'Login successful', userId: user.UserId });
     } catch (error) {
-        console.error('Database error:', error);
-        res.status(500).json({ message: 'Error adding care task' });
+        console.error('Login error:', error.message);
+        res.status(500).json({ message: 'An error occurred during login. Please try again.' });
     }
 });
 
