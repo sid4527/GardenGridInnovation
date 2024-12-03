@@ -8,7 +8,7 @@ function InventoryOverviewReport() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('http://localhost:9000/api/inventory/items'); // Replace with deployed API URL
+        const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL || 'http://3.21.98.193:9000'}/api/inventory/items`);
         console.log('API Response:', response.data);
         if (Array.isArray(response.data)) {
           setData(response.data);

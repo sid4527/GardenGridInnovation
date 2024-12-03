@@ -36,7 +36,10 @@ const SignupPage = () => {
     }
 
     try {
-      const response = await axios.post('http://localhost:9000/api/users', { userId, password, email });
+      const response = await axios.post(
+        `${process.env.REACT_APP_BACKEND_URL || 'http://3.21.98.193:9000'}/api/users`, 
+        { userId, password, email }
+      );
       setMessage(response.data.message || 'Sign-up successful!');
       
       setTimeout(() => {

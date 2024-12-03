@@ -8,7 +8,9 @@ function MaintenanceScheduleReport() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('http://localhost:9000/api/care-tasks');
+        // Use the environment variable for the backend URL
+        const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL || 'http://3.21.98.193:9000'}/api/care-tasks`);
+
         console.log('API Response:', response.data); // Log the response
         setData(response.data); // Update state with the response
       } catch (error) {

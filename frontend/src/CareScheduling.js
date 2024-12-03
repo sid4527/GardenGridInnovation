@@ -10,7 +10,7 @@ function CareScheduling() {
     careType: 'Watering',
     notes: '',
   });
-  const [tasks, setTasks] = useState([ // State to store tasks
+  const [tasks, setTasks] = useState([
     { date: '2024-11-01', plant: 'Rose Bush', careType: 'Watering', status: 'Completed' },
     { date: '2024-11-02', plant: 'Lavender', careType: 'Fertilizing', status: 'Pending' },
   ]);
@@ -36,11 +36,12 @@ function CareScheduling() {
       date: formData.date,
       plant: formData.plant,
       careType: formData.careType,
-      status: 'Pending', // Default status on submission
+      status: 'Pending',
     };
 
     try {
-      const response = await fetch('http://localhost:9000/api/care-tasks', {
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL || 'http://3.21.98.193:9000'}/api/care-tasks`, {
+
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -56,9 +57,9 @@ function CareScheduling() {
 
       if (response.ok) {
         console.log('New care task added successfully');
-        setTasks([...tasks, newTask]); // Append the new task to the list
-        setShowForm(false); // Hide the form after successful submission
-        setFormData({ date: '', plant: 'Rose Bush', careType: 'Watering', notes: '' }); // Reset the form
+        setTasks([...tasks, newTask]);
+        setShowForm(false);
+        setFormData({ date: '', plant: 'Rose Bush', careType: 'Watering', notes: '' });
       } else {
         console.error('Failed to add new care task');
       }
@@ -143,7 +144,6 @@ function CareScheduling() {
             </form>
           </div>
         )}
-
       </div>
     </div>
   );
