@@ -1,0 +1,118 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CareScheduling Component matches snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="care-scheduling"
+    role="main"
+  >
+    <header
+      class="header"
+    >
+      <h1>
+        Garden Grid Care Scheduling
+      </h1>
+    </header>
+    <nav
+      aria-label="Navigation Tabs"
+      class="tabs"
+    >
+      <a
+        class="tab"
+        href="/inventory-management"
+      >
+        Inventory Management
+      </a>
+      <a
+        class="tab"
+        href="/care-scheduling"
+      >
+        Care Scheduling
+      </a>
+      <a
+        class="tab"
+        href="/growth-tracking"
+      >
+        Growth Tracking
+      </a>
+    </nav>
+    <div
+      class="content"
+    >
+      <h2>
+        Care Scheduling
+      </h2>
+      <button
+        aria-expanded="false"
+        class="new-entry-button"
+      >
+        + New Entry
+      </button>
+      <table
+        class="scheduling-table"
+        role="table"
+      >
+        <thead>
+          <tr>
+            <th
+              scope="col"
+            >
+              Date
+            </th>
+            <th
+              scope="col"
+            >
+              Plant
+            </th>
+            <th
+              scope="col"
+            >
+              Care Type
+            </th>
+            <th
+              scope="col"
+            >
+              Status
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              2024-11-01
+            </td>
+            <td>
+              Rose Bush
+            </td>
+            <td>
+              Watering
+            </td>
+            <td>
+              Completed
+            </td>
+          </tr>
+          <tr>
+            <td>
+              2024-11-02
+            </td>
+            <td>
+              Lavender
+            </td>
+            <td>
+              Fertilizing
+            </td>
+            <td>
+              Pending
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <button
+        class="login-button"
+      >
+        Back to Home
+      </button>
+    </div>
+  </div>
+</DocumentFragment>
+`;
