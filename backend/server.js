@@ -11,12 +11,14 @@ const port = 9000;
 // CORS configuration
 app.use(
   cors({
-    origin: [process.env.FRONTEND_URL, process.env.BACKEND_URL], // Add your backend's public URL
+    origin: [
+      process.env.FRONTEND_URL || 'https://garden-grid-app.vercel.app/', // Default to frontend URL if variable is not set
+      process.env.REACT_APP_BACKEND_URL || 'https://3.21.98.193:9000', // Default to backend URL if variable is not set
+    ],
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
+    allowedHeaders: ['Content-Type', 'Authorization'], // Allow headers required for API communication
   })
 );
-
 
 // Middleware to parse JSON bodies
 app.use(express.json());
