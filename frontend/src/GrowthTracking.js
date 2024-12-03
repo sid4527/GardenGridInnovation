@@ -40,7 +40,7 @@ function GrowthTracking() {
     };
 
     try {
-      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL || 'https://3.21.98.193:9000'}/api/growth-records`, {
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL || 'http://3.21.98.193:9000'}/api/growth-records`, {
         
         method: 'POST',
         headers: {

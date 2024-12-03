@@ -40,7 +40,7 @@ function CareScheduling() {
     };
 
     try {
-      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL || 'https://3.21.98.193:9000'}/api/care-tasks`, {
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL || 'http://3.21.98.193:9000'}/api/care-tasks`, {
 
         method: 'POST',
         headers: {

@@ -12,8 +12,8 @@ const port = 9000;
 app.use(
   cors({
     origin: [
-      process.env.FRONTEND_URL || 'https://garden-grid-app.vercel.app/', // Default to frontend URL if variable is not set
-      process.env.REACT_APP_BACKEND_URL || 'https://3.21.98.193:9000', // Default to backend URL if variable is not set
+      process.env.FRONTEND_URL || 'http://garden-grid-app.vercel.app/', // Default to frontend URL if variable is not set
+      process.env.REACT_APP_BACKEND_URL || 'http://3.21.98.193:9000', // Default to backend URL if variable is not set
     ],
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'], // Allow headers required for API communication
