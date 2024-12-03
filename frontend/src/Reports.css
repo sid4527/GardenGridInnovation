@@ -5,19 +5,56 @@
   padding: 20px;
 }
 
-.header {
-  text-align: center;
-  margin-bottom: 30px;
-  color: #4caf50;
+/* Navbar Styling */
+.navbar {
+  background-color: #4caf50;
+  color: white;
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 5px;
+  margin-bottom: 20px;
 }
 
-.header h1 {
-  font-size: 2.5em;
+.navbar-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
 }
 
-.header p {
-  font-size: 1.2em;
-  color: #666;
+.navbar-logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.navbar-links {
+  display: flex;
+  gap: 15px;
+}
+
+.navbar-links a {
+  color: white;
+  text-decoration: none;
+  font-size: 1rem;
+}
+
+.navbar-links a:hover {
+  text-decoration: underline;
+}
+
+/* Responsive Navbar */
+@media (max-width: 768px) {
+  .navbar-links {
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+  }
+
+  .navbar-logo {
+    font-size: 1.2rem;
+  }
 }
 
 .content {
@@ -28,6 +65,33 @@
   font-size: 1.8em;
   color: #4caf50;
   margin-bottom: 20px;
+}
+
+.no-data-message {
+  text-align: center;
+  font-size: 1.2em;
+  color: #555;
+  margin: 20px 0;
+}
+
+.report {
+  padding: 20px;
+}
+
+.report-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.report-table th,
+.report-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.report-table th {
+  background-color: #f4f4f4;
 }
 
 .report-grid {
@@ -66,6 +130,57 @@
 
 .report-card:hover {
   transform: scale(1.05);
+}
+
+.report {
+  max-width: 1200px;
+  margin: 30px auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  font-family: Arial, sans-serif;
+}
+
+.report-title {
+  text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.report-container {
+  overflow-x: auto;
+}
+
+.report-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: white;
+}
+
+.report-table th {
+  background-color: #4caf50;
+  color: white;
+  text-align: left;
+  padding: 10px;
+  font-size: 16px;
+}
+
+.report-table td {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+  text-align: left;
+  font-size: 14px;
+}
+
+.report-table tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.report-table tr:hover {
+  background-color: #ddd;
 }
 
 .export-section {

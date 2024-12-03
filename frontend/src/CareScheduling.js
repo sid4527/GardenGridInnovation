@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'; 
 import { useNavigate, Link } from 'react-router-dom';
 import './CareScheduling.css';
 
@@ -10,6 +10,10 @@ function CareScheduling() {
     careType: 'Watering',
     notes: '',
   });
+  const [tasks, setTasks] = useState([ // State to store tasks
+    { date: '2024-11-01', plant: 'Rose Bush', careType: 'Watering', status: 'Completed' },
+    { date: '2024-11-02', plant: 'Lavender', careType: 'Fertilizing', status: 'Pending' },
+  ]);
   const navigate = useNavigate();
 
   const handleNewEntry = () => {
@@ -28,6 +32,13 @@ function CareScheduling() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    const newTask = {
+      date: formData.date,
+      plant: formData.plant,
+      careType: formData.careType,
+      status: 'Pending', // Default status on submission
+    };
+
     try {
       const response = await fetch('http://localhost:9000/api/care-tasks', {
         method: 'POST',
@@ -38,16 +49,16 @@ function CareScheduling() {
           TaskDate: formData.date,
           PlantName: formData.plant,
           CareType: formData.careType,
-          Status: 'Pending', // Default status on submission
+          Status: 'Pending',
           Notes: formData.notes,
         }),
       });
 
       if (response.ok) {
         console.log('New care task added successfully');
+        setTasks([...tasks, newTask]); // Append the new task to the list
         setShowForm(false); // Hide the form after successful submission
         setFormData({ date: '', plant: 'Rose Bush', careType: 'Watering', notes: '' }); // Reset the form
-        // Optionally, refresh the table to show the new entry
       } else {
         console.error('Failed to add new care task');
       }
@@ -58,8 +69,18 @@ function CareScheduling() {
 
   return (
     <div className="care-scheduling">
-      <header className="header">
-        <h2>Garden Grid Care Scheduling</h2>
+      <header className="navbar">
+        <div className="navbar-content">
+          <div className="navbar-logo">🌿 Garden Grid</div>
+          <nav className="navbar-links">
+            <Link to="/">Home</Link>
+            <Link to="/inventory">Inventory</Link>
+            <Link to="/inventory-management">Entries</Link>
+            <Link to="/resources">Resources</Link>
+            <Link to="/reports">Reports</Link>
+            <Link to="/login">Log Out</Link>
+          </nav>
+        </div>
       </header>
 
       <nav className="tabs">
@@ -82,19 +103,14 @@ function CareScheduling() {
             </tr>
           </thead>
           <tbody>
-            {/* Placeholder rows */}
-            <tr>
-              <td>2024-11-01</td>
-              <td>Rose Bush</td>
-              <td>Watering</td>
-              <td>Completed</td>
-            </tr>
-            <tr>
-              <td>2024-11-02</td>
-              <td>Lavender</td>
-              <td>Fertilizing</td>
-              <td>Pending</td>
-            </tr>
+            {tasks.map((task, index) => (
+              <tr key={index}>
+                <td>{task.date}</td>
+                <td>{task.plant}</td>
+                <td>{task.careType}</td>
+                <td>{task.status}</td>
+              </tr>
+            ))}
           </tbody>
         </table>
 
@@ -128,9 +144,6 @@ function CareScheduling() {
           </div>
         )}
 
-        <button className="login-button" onClick={handleLoginRedirect}>
-          Back to Home
-        </button>
       </div>
     </div>
   );

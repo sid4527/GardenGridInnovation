@@ -9,127 +9,239 @@ const app = express();
 const port = 9000;
 
 // CORS configuration
-app.use(cors({
+app.use(
+  cors({
     origin: 'http://localhost:3000',
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],
-}));
+  })
+);
 
 // Middleware to parse JSON bodies
 app.use(express.json());
 
 // Database configuration
 const dbConfig = {
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    server: process.env.DB_SERVER,
-    database: process.env.DB_NAME,
-    options: {
-        encrypt: true,
-        trustServerCertificate: true,
-    },
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  server: process.env.DB_SERVER,
+  database: process.env.DB_NAME,
+  options: {
+    encrypt: true,
+    trustServerCertificate: true,
+  },
 };
 
 // Create a global pool promise
 const poolPromise = new sql.ConnectionPool(dbConfig)
-    .connect()
-    .then(pool => {
-        console.log('Database connected successfully');
-        return pool;
-    })
-    .catch(err => {
-        console.error('Database connection failed:', err.message);
-        throw err;
-    });
+  .connect()
+  .then((pool) => {
+    console.log('Database connected successfully');
+    return pool;
+  })
+  .catch((err) => {
+    console.error('Database connection failed:', err);
+    throw err;
+  });
 
 // Root route
 app.get('/', (req, res) => {
-    res.send('Welcome to the Garden Grid API');
+  res.send('Welcome to the Garden Grid API');
 });
 
 // Use the inventory routes
 app.use('/api/inventory', inventoryRoutes);
 
-// Route to handle user sign-up
-app.post('/api/users', async (req, res) => {
-    const { userId, password, email } = req.body;
-
-    if (!userId || !password || !email) {
-        return res.status(400).json({ message: 'All fields are required' });
-    }
-
-    try {
-        const passwordHash = await bcrypt.hash(password, 10);
-        const pool = await poolPromise;
-
-        const checkUserQuery = `
-            SELECT COUNT(*) AS UserCount 
-            FROM Users 
-            WHERE UserId = @UserId OR Email = @Email
-        `;
-        const userExists = await pool.request()
-            .input('UserId', sql.NVarChar, userId)
-            .input('Email', sql.NVarChar, email)
-            .query(checkUserQuery);
-
-        if (userExists.recordset[0].UserCount > 0) {
-            return res.status(400).json({ message: 'UserId or Email already exists' });
-        }
-
-        const insertUserQuery = `
-            INSERT INTO Users (UserId, PasswordHash, Email)
-            VALUES (@UserId, @PasswordHash, @Email)
-        `;
-        await pool.request()
-            .input('UserId', sql.NVarChar, userId)
-            .input('PasswordHash', sql.NVarChar, passwordHash)
-            .input('Email', sql.NVarChar, email)
-            .query(insertUserQuery);
-
-        res.status(201).json({ message: 'Sign-up successful!' });
-    } catch (error) {
-        console.error('Sign-up error:', error.message);
-        res.status(500).json({ message: 'An error occurred during sign-up. Please try again.' });
-    }
+// Add a GET route for /api/users to avoid 404 errors during browser testing
+app.get('/api/users', (req, res) => {
+  res.send('This is the /api/users endpoint. Please use a POST request to sign up.');
 });
 
-// Route to handle user login
+// Route to handle user sign-up
+app.post('/api/users', async (req, res) => {
+  const { userId, password, email } = req.body;
+
+  if (!userId || !password || !email) {
+    return res.status(400).json({ message: 'All fields are required' });
+  }
+
+  try {
+    const passwordHash = await bcrypt.hash(password, 10);
+    const pool = await poolPromise;
+
+    const checkUserQuery = `
+      SELECT COUNT(*) AS UserCount 
+      FROM Users 
+      WHERE UserId = @UserId OR Email = @Email
+    `;
+    const userExists = await pool
+      .request()
+      .input('UserId', sql.NVarChar, userId)
+      .input('Email', sql.NVarChar, email)
+      .query(checkUserQuery);
+
+    if (userExists.recordset[0].UserCount > 0) {
+      return res.status(400).json({ message: 'UserId or Email already exists' });
+    }
+
+    const insertUserQuery = `
+      INSERT INTO Users (UserId, PasswordHash, Email)
+      VALUES (@UserId, @PasswordHash, @Email)
+    `;
+    await pool
+      .request()
+      .input('UserId', sql.NVarChar, userId)
+      .input('PasswordHash', sql.NVarChar, passwordHash)
+      .input('Email', sql.NVarChar, email)
+      .query(insertUserQuery);
+
+    res.status(201).json({ message: 'Sign-up successful!' });
+  } catch (error) {
+    console.error('Sign-up error:', error);
+    res.status(500).json({ message: 'An error occurred during sign-up. Please try again.' });
+  }
+});
+
+// **Route: Fetch Distinct Filter Options**
+app.get('/api/inventory/filters', async (req, res) => {
+  try {
+    const pool = await poolPromise;
+
+    const conditionsResult = await pool.request().query('SELECT DISTINCT Condition FROM Inventory');
+    const quantitiesResult = await pool.request().query('SELECT DISTINCT Quantity FROM Inventory');
+
+    res.json({
+      conditions: conditionsResult.recordset.map((row) => row.Condition),
+      quantities: quantitiesResult.recordset.map((row) => row.Quantity),
+    });
+  } catch (error) {
+    console.error('Failed to fetch filter options:', error);
+    res.status(500).json({ message: 'Failed to fetch filter options.' });
+  }
+});
+
+// **Enhanced Route: Fetch Inventory Items with Filters and Sorting**
+app.get('/api/inventory/items', async (req, res) => {
+  const { condition, quantity, sortBy } = req.query;
+
+  try {
+    const pool = await poolPromise;
+    const request = pool.request();
+
+    let query = 'SELECT * FROM Inventory WHERE 1=1';
+
+    if (condition) {
+      query += ' AND Condition = @Condition';
+      request.input('Condition', sql.NVarChar, condition);
+    }
+    if (quantity) {
+      query += ' AND Quantity = @Quantity';
+      request.input('Quantity', sql.Int, quantity);
+    }
+
+    if (sortBy) {
+      const validSortColumns = ['Condition', 'Quantity'];
+      if (validSortColumns.includes(sortBy)) {
+        query += ` ORDER BY ${sortBy}`;
+      } else {
+        return res.status(400).json({ message: 'Invalid sort column specified.' });
+      }
+    }
+
+    const result = await request.query(query);
+    res.json(result.recordset);
+  } catch (error) {
+    console.error('Failed to fetch inventory items:', error);
+    res.status(500).json({ message: 'Failed to fetch inventory items.' });
+  }
+});
+
+// **Route: Fetch Care Tasks**
+app.get('/api/care-tasks', async (req, res) => {
+  try {
+    const pool = await poolPromise;
+
+    const query = `
+      SELECT TaskDate, CareType, PlantName, Status 
+      FROM CareTasks
+    `;
+    const result = await pool.request().query(query);
+
+    res.json(result.recordset);
+  } catch (error) {
+    console.error('Error fetching care tasks:', error);
+    res.status(500).json({ message: 'Failed to fetch care tasks.' });
+  }
+});
+
+// **Route: Login**
 app.post('/api/login', async (req, res) => {
-    const { userId, password } = req.body;
+  const { userId, password } = req.body;
 
-    if (!userId || !password) {
-        return res.status(400).json({ message: 'All fields are required' });
+  if (!userId || !password) {
+    return res.status(400).json({ message: 'UserId and Password are required' });
+  }
+
+  try {
+    const pool = await poolPromise;
+
+    const query = `
+      SELECT PasswordHash 
+      FROM Users 
+      WHERE UserId = @UserId
+    `;
+    const result = await pool.request()
+      .input('UserId', sql.NVarChar, userId)
+      .query(query);
+
+    if (result.recordset.length === 0) {
+      return res.status(404).json({ message: 'User not found' });
     }
 
-    try {
-        const pool = await poolPromise;
+    const storedPasswordHash = result.recordset[0].PasswordHash;
+    const isPasswordValid = await bcrypt.compare(password, storedPasswordHash);
 
-        const query = `
-            SELECT * FROM Users WHERE UserId = @UserId
-        `;
-        const result = await pool.request()
-            .input('UserId', sql.NVarChar, userId)
-            .query(query);
-
-        if (result.recordset.length === 0) {
-            return res.status(404).json({ message: 'User not found' });
-        }
-
-        const user = result.recordset[0];
-        const isPasswordValid = await bcrypt.compare(password, user.PasswordHash);
-
-        if (!isPasswordValid) {
-            return res.status(401).json({ message: 'Invalid credentials' });
-        }
-
-        res.status(200).json({ message: 'Login successful', userId: user.UserId });
-    } catch (error) {
-        console.error('Login error:', error.message);
-        res.status(500).json({ message: 'An error occurred during login. Please try again.' });
+    if (!isPasswordValid) {
+      return res.status(401).json({ message: 'Invalid credentials' });
     }
+
+    res.status(200).json({ message: 'Login successful!' });
+  } catch (error) {
+    console.error('Login error:', error);
+    res.status(500).json({ message: 'An error occurred during login. Please try again.' });
+  }
+});
+
+// **Route: Add Growth Records**
+app.post('/api/growth-records', async (req, res) => {
+  const { date, plant, height, notes } = req.body;
+
+  if (!date || !plant || !height || !notes) {
+    return res.status(400).json({ message: 'All fields are required.' });
+  }
+
+  try {
+    const pool = await poolPromise;
+
+    const query = `
+      INSERT INTO GrowthRecords (Date, Plant, Height, Notes)
+      VALUES (@Date, @Plant, @Height, @Notes)
+    `;
+    await pool.request()
+      .input('Date', sql.Date, date)
+      .input('Plant', sql.NVarChar, plant)
+      .input('Height', sql.Int, height)
+      .input('Notes', sql.NVarChar, notes)
+      .query(query);
+
+    res.status(201).json({ message: 'Growth record added successfully.' });
+  } catch (error) {
+    console.error('Error adding growth record:', error);
+    res.status(500).json({ message: 'Failed to add growth record.' });
+  }
 });
 
 // Start the server
 app.listen(port, () => {
-    console.log(`Server running on http://localhost:${port}`);
+  console.log(`Server running on http://localhost:${port}`);
 });

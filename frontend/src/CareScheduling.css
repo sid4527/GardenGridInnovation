@@ -1,141 +1,223 @@
+/* General Styles */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f4f8f5;
+  color: #333;
+}
+
 .care-scheduling {
-    font-family: Arial, sans-serif;
-    color: #333;
-    padding: 20px;
-    background-color: #f4f8f5;
-  }
-  
-  .header {
-    text-align: center;
-    color: #4caf50;
-  }
-  
-  .header h2 {
-    font-size: 2em;
-    margin-bottom: 20px;
-  }
-  
+  padding: 20px;
+}
+
+/* Header */
+.header {
+  text-align: center;
+  color: #4caf50;
+}
+
+.header h2 {
+  font-size: 2em;
+  margin-bottom: 20px;
+}
+
+/* Tabs Navigation */
+.tabs {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.tab {
+  color: #4caf50;
+  font-size: 1em;
+  text-decoration: none;
+  padding: 10px 15px;
+  border: 2px solid #4caf50;
+  border-radius: 5px;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.tab:hover {
+  background-color: #4caf50;
+  color: #fff;
+}
+
+/* Content */
+.content {
+  text-align: center;
+}
+
+/* New Entry Button */
+.new-entry-button {
+  margin: 20px 0;
+  padding: 10px 20px;
+  background-color: #4caf50;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  font-size: 1em;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.new-entry-button:hover {
+  background-color: #388e3c;
+}
+
+/* Scheduling Table */
+.scheduling-table {
+  width: 100%;
+  margin-top: 20px;
+  border-collapse: collapse;
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  overflow-x: auto; /* Allow horizontal scrolling for smaller screens */
+}
+
+.scheduling-table th,
+.scheduling-table td {
+  padding: 10px 15px;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+.scheduling-table th {
+  background-color: #4caf50;
+  color: #fff;
+}
+
+.scheduling-table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.scheduling-table tr:hover {
+  background-color: #f1f1f1;
+}
+
+/* Entry Form */
+.entry-form {
+  margin: 20px auto;
+  max-width: 500px;
+  padding: 20px;
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  text-align: left;
+}
+
+.entry-form h3 {
+  color: #4caf50;
+  margin-bottom: 15px;
+}
+
+.entry-form label {
+  display: block;
+  margin: 10px 0;
+  font-size: 1em;
+}
+
+.entry-form input,
+.entry-form select {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.submit-button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #4caf50;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  font-size: 1em;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.submit-button:hover {
+  background-color: #388e3c;
+}
+
+/* Login Button */
+.login-button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #f44336;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  font-size: 1em;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.login-button:hover {
+  background-color: #d32f2f;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
   .tabs {
-    display: flex;
+    flex-wrap: wrap;
     justify-content: center;
-    gap: 15px;
-    margin-bottom: 20px;
   }
-  
+
   .tab {
-    color: #4caf50;
-    font-size: 1em;
-    text-decoration: none;
-    padding: 10px 15px;
-    border: 2px solid #4caf50;
-    border-radius: 5px;
-    transition: background-color 0.3s, color 0.3s;
+    margin: 5px;
   }
-  
-  .tab:hover {
-    background-color: #4caf50;
-    color: #fff;
-  }
-  
-  .content {
-    text-align: center;
-  }
-  
-  .new-entry-button {
-    margin: 20px 0;
-    padding: 10px 20px;
-    background-color: #4caf50;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    font-size: 1em;
-    cursor: pointer;
-    transition: background-color 0.3s;
-  }
-  
-  .new-entry-button:hover {
-    background-color: #388e3c;
-  }
-  
-  .scheduling-table {
-    width: 100%;
-    margin-top: 20px;
-    border-collapse: collapse;
-    background-color: #fff;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-  }
-  
+
   .scheduling-table th,
   .scheduling-table td {
-    padding: 10px 15px;
-    border: 1px solid #ddd;
-    text-align: left;
+    font-size: 14px;
+    padding: 8px;
   }
-  
-  .scheduling-table th {
-    background-color: #4caf50;
-    color: #fff;
+
+  .new-entry-button,
+  .submit-button {
+    padding: 8px 16px;
+    font-size: 14px;
   }
-  
+
   .entry-form {
-    margin: 20px auto;
-    max-width: 500px;
-    padding: 20px;
-    background-color: #fff;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
+    padding: 15px;
   }
-  
-  .entry-form h3 {
-    color: #4caf50;
-    margin-bottom: 15px;
-  }
-  
+
   .entry-form label {
-    display: block;
-    margin: 10px 0;
-    font-size: 1em;
+    font-size: 14px;
   }
-  
+
   .entry-form input,
   .entry-form select {
+    font-size: 14px;
+    padding: 6px;
+  }
+}
+
+@media (max-width: 480px) {
+  .tabs {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .scheduling-table {
+    font-size: 12px;
+    overflow-x: auto; /* Enable scrolling for very small devices */
+  }
+
+  .entry-form {
     width: 100%;
-    padding: 8px;
-    margin-top: 5px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
   }
-  
+
+  .new-entry-button,
   .submit-button {
-    margin-top: 20px;
-    padding: 10px 20px;
-    background-color: #4caf50;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    font-size: 1em;
-    cursor: pointer;
-    transition: background-color 0.3s;
+    font-size: 12px;
   }
-  
-  .submit-button:hover {
-    background-color: #388e3c;
-  }
-  
-  .login-button {
-    margin-top: 20px;
-    padding: 10px 20px;
-    background-color: #f44336;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    font-size: 1em;
-    cursor: pointer;
-    transition: background-color 0.3s;
-  }
-  
-  .login-button:hover {
-    background-color: #d32f2f;
-  }
-  
+}

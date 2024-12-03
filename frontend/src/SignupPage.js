@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 const SignupPage = () => {
@@ -7,18 +7,40 @@ const SignupPage = () => {
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
-  const navigate = useNavigate(); // Initialize navigate
+  const [errors, setErrors] = useState({});
+  const navigate = useNavigate();
+
+  const validate = () => {
+    const newErrors = {};
+
+    // User ID validation
+    if (userId.length < 7) {
+      newErrors.userId = 'User ID must be at least 7 characters long.';
+    }
+
+    // Password validation
+    const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]{8,}$/;
+    if (!passwordRegex.test(password)) {
+      newErrors.password = 'Password must be at least 8 characters long, include one uppercase letter, one number, and one special character.';
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!validate()) {
+      return; // If validation fails, do not proceed
+    }
+
     try {
-      // Correct the API endpoint to match the backend route
       const response = await axios.post('http://localhost:9000/api/users', { userId, password, email });
       setMessage(response.data.message || 'Sign-up successful!');
       
-      // Redirect to login page after a short delay
       setTimeout(() => {
-        navigate('/login'); // Navigate to the login page
+        navigate('/login');
       }, 1500);
     } catch (error) {
       setMessage(error.response?.data?.message || 'Sign-up failed. Please try again.');
@@ -32,8 +54,10 @@ const SignupPage = () => {
         justifyContent: 'center',
         alignItems: 'center',
         height: '100vh',
-        backgroundImage: 'url("/path-to-your-background-image.jpg")',
         backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+        backgroundImage: 'url("./images/login_Backdrop_02.png")', 
       }}
     >
       <div
@@ -62,6 +86,11 @@ const SignupPage = () => {
               }}
               required
             />
+            {errors.userId && (
+              <p style={{ color: 'red', fontSize: '12px', marginTop: '5px' }}>
+                {errors.userId}
+              </p>
+            )}
           </div>
           <div style={{ margin: '10px 0' }}>
             <label style={{ display: 'block', fontWeight: 'bold' }}>Password:</label>
@@ -77,6 +106,11 @@ const SignupPage = () => {
               }}
               required
             />
+            {errors.password && (
+              <p style={{ color: 'red', fontSize: '12px', marginTop: '5px' }}>
+                {errors.password}
+              </p>
+            )}
           </div>
           <div style={{ margin: '10px 0' }}>
             <label style={{ display: 'block', fontWeight: 'bold' }}>Email:</label>

@@ -25,7 +25,7 @@ router.get('/', (req, res) => {
 router.get('/items', async (req, res) => {
     try {
         const pool = await sql.connect(dbConfig);
-        const result = await pool.request().query('SELECT item FROM inventory');
+        const result = await pool.request().query('SELECT date, item, quantity, condition FROM inventory');
         res.json(result.recordset); // Sends only the item column
     } catch (error) {
         console.error('Database error:', error); // Log the exact error
