@@ -10,7 +10,7 @@ function GrowthTracking() {
     height: '',
     notes: '',
   });
-  const [records, setRecords] = useState([ // State to store growth records
+  const [records, setRecords] = useState([
     { date: '2024-11-01', plant: 'Rose Bush', height: '30 cm', notes: 'Healthy growth observed' },
     { date: '2024-11-02', plant: 'Lavender', height: '25 cm', notes: 'New leaves forming' },
   ]);
@@ -40,7 +40,8 @@ function GrowthTracking() {
     };
 
     try {
-      const response = await fetch('http://localhost:9000/api/growth-records', {
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL || 'http://3.21.98.193:9000'}/api/growth-records`, {
+        
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -137,7 +138,6 @@ function GrowthTracking() {
             </form>
           </div>
         )}
-
       </div>
     </div>
   );
