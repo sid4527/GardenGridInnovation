@@ -8,7 +8,7 @@ function InventoryOverviewReport() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('http://localhost:9000/api/inventory/items');
+        const response = await axios.get('http://localhost:9000/api/inventory/items'); // Replace with deployed API URL
         console.log('API Response:', response.data);
         if (Array.isArray(response.data)) {
           setData(response.data);
@@ -64,30 +64,34 @@ function InventoryOverviewReport() {
     <div className="report">
       <h2 className="report-title">Inventory Overview Report</h2>
       <div className="report-container">
-        {data.length === 0 ? (
-          <p className="no-data-message">No Data Available</p>
-        ) : (
-          <table className="report-table">
-            <thead>
+        <table className="report-table">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Item</th>
+              <th>Quantity</th>
+              <th>Condition</th>
+            </tr>
+          </thead>
+          <tbody>
+            {data.length === 0 ? (
               <tr>
-                <th>Date</th>
-                <th>Item</th>
-                <th>Quantity</th>
-                <th>Condition</th>
+                <td colSpan="4" style={{ textAlign: 'center' }}>
+                  No data available
+                </td>
               </tr>
-            </thead>
-            <tbody>
-              {data.map((entry, index) => (
+            ) : (
+              data.map((entry, index) => (
                 <tr key={index}>
                   <td>{formatDate(entry.date)}</td>
                   <td>{entry.item}</td>
                   <td>{entry.quantity}</td>
                   <td>{entry.condition}</td>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        )}
+              ))
+            )}
+          </tbody>
+        </table>
       </div>
       <button className="export-button" onClick={exportToCSV}>
         Export to CSV
