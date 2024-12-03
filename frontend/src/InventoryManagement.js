@@ -9,6 +9,10 @@ function InventoryManagement() {
   const [item, setItem] = useState('Rose Bush');
   const [quantity, setQuantity] = useState('');
   const [condition, setCondition] = useState('Healthy');
+  const [records, setRecords] = useState([ // State to store inventory records
+    { date: '2024-10-31', item: 'Rose Bush', quantity: 15, condition: 'Healthy' },
+    { date: '2024-10-31', item: 'Lavender', quantity: 20, condition: 'Healthy' },
+  ]);
   const navigate = useNavigate();
 
   const handleNewEntry = () => {
@@ -22,7 +26,6 @@ function InventoryManagement() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Prepare the data to send to the backend
     const newEntry = {
       date,
       item,
@@ -33,9 +36,13 @@ function InventoryManagement() {
     try {
       // Send the data to the backend API
       await axios.post('http://localhost:9000/api/inventory', newEntry);
+      setRecords([...records, newEntry]); // Append the new entry to the list
       alert('New inventory item added successfully!');
-      setShowForm(false);
-      // Optionally, reload or refresh the data in your table here
+      setShowForm(false); // Hide the form
+      setDate(''); // Reset the form fields
+      setItem('Rose Bush');
+      setQuantity('');
+      setCondition('Healthy');
     } catch (error) {
       console.error('Error adding new inventory item:', error);
       alert('Failed to add new inventory item.');
@@ -44,8 +51,18 @@ function InventoryManagement() {
 
   return (
     <div className="inventory-management">
-      <header className="header">
-        <h2>Garden Grid Inventory</h2>
+       <header className="navbar">
+        <div className="navbar-content">
+          <div className="navbar-logo">🌿 Garden Grid</div>
+          <nav className="navbar-links">
+            <Link to="/">Home</Link>
+            <Link to="/inventory">Inventory</Link>
+            <Link to="/inventory-management">Entries</Link>
+            <Link to="/resources">Resources</Link>
+            <Link to="/reports">Reports</Link>
+            <Link to="/login">Log Out</Link>
+          </nav>
+        </div>
       </header>
 
       <nav className="tabs">
@@ -68,19 +85,14 @@ function InventoryManagement() {
             </tr>
           </thead>
           <tbody>
-            {/* Placeholder rows */}
-            <tr>
-              <td>2024-10-31</td>
-              <td>Rose Bush</td>
-              <td>15</td>
-              <td>Healthy</td>
-            </tr>
-            <tr>
-              <td>2024-10-31</td>
-              <td>Lavender</td>
-              <td>20</td>
-              <td>Healthy</td>
-            </tr>
+            {records.map((record, index) => (
+              <tr key={index}>
+                <td>{record.date}</td>
+                <td>{record.item}</td>
+                <td>{record.quantity}</td>
+                <td>{record.condition}</td>
+              </tr>
+            ))}
           </tbody>
         </table>
 
@@ -124,9 +136,6 @@ function InventoryManagement() {
           </div>
         )}
 
-        <button className="login-button" onClick={handleLoginRedirect}>
-          Back to Home
-        </button>
       </div>
     </div>
   );

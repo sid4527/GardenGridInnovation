@@ -10,6 +10,10 @@ function GrowthTracking() {
     height: '',
     notes: '',
   });
+  const [records, setRecords] = useState([ // State to store growth records
+    { date: '2024-11-01', plant: 'Rose Bush', height: '30 cm', notes: 'Healthy growth observed' },
+    { date: '2024-11-02', plant: 'Lavender', height: '25 cm', notes: 'New leaves forming' },
+  ]);
   const navigate = useNavigate();
 
   const handleNewEntry = () => {
@@ -28,6 +32,13 @@ function GrowthTracking() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    const newRecord = {
+      date: formData.date,
+      plant: formData.plant,
+      height: `${formData.height} cm`,
+      notes: formData.notes,
+    };
+
     try {
       const response = await fetch('http://localhost:9000/api/growth-records', {
         method: 'POST',
@@ -44,9 +55,9 @@ function GrowthTracking() {
 
       if (response.ok) {
         console.log('New growth record added successfully');
+        setRecords([...records, newRecord]); // Append the new record to the list
         setShowForm(false); // Hide the form after successful submission
         setFormData({ date: '', plant: 'Rose Bush', height: '', notes: '' }); // Reset the form
-        // Optionally, refresh the table to show the new entry
       } else {
         console.error('Failed to add new growth record');
       }
@@ -57,8 +68,18 @@ function GrowthTracking() {
 
   return (
     <div className="growth-tracking">
-      <header className="header">
-        <h2>Garden Grid Growth Tracking</h2>
+      <header className="navbar">
+        <div className="navbar-content">
+          <div className="navbar-logo">🌿 Garden Grid</div>
+          <nav className="navbar-links">
+            <Link to="/">Home</Link>
+            <Link to="/inventory">Inventory</Link>
+            <Link to="/inventory-management">Entries</Link>
+            <Link to="/resources">Resources</Link>
+            <Link to="/reports">Reports</Link>
+            <Link to="/login">Log Out</Link>
+          </nav>
+        </div>
       </header>
 
       <nav className="tabs">
@@ -81,19 +102,14 @@ function GrowthTracking() {
             </tr>
           </thead>
           <tbody>
-            {/* Placeholder rows */}
-            <tr>
-              <td>2024-11-01</td>
-              <td>Rose Bush</td>
-              <td>30 cm</td>
-              <td>Healthy growth observed</td>
-            </tr>
-            <tr>
-              <td>2024-11-02</td>
-              <td>Lavender</td>
-              <td>25 cm</td>
-              <td>New leaves forming</td>
-            </tr>
+            {records.map((record, index) => (
+              <tr key={index}>
+                <td>{record.date}</td>
+                <td>{record.plant}</td>
+                <td>{record.height}</td>
+                <td>{record.notes}</td>
+              </tr>
+            ))}
           </tbody>
         </table>
 
@@ -122,9 +138,6 @@ function GrowthTracking() {
           </div>
         )}
 
-        <button className="login-button" onClick={handleLoginRedirect}>
-          Back to Home
-        </button>
       </div>
     </div>
   );

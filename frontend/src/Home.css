@@ -22,17 +22,29 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap; /* Allow wrapping for smaller screens */
 }
 
 .navbar-logo {
   font-size: 24px;
   font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.navbar-links {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap; /* Enable responsive layout for links */
 }
 
 .navbar-links a {
   color: #fff;
   text-decoration: none;
   margin: 0 10px;
+}
+
+.navbar-links a:hover {
+  text-decoration: underline;
 }
 
 .quote-button {
@@ -54,7 +66,7 @@ body {
 
 .hero-section h1 {
   font-size: 48px;
-  color:white;
+  color: white;
   font-weight: bold;
   margin: 0;
 }
@@ -76,15 +88,46 @@ body {
 
 .image-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 20px;
+  justify-items: center;
+  padding: 20px;
 }
 
 .image-item {
-  font-size: 32px;
-  background-color: #e0e0e0;
-  padding: 20px;
-  border-radius: 10px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 150px;
+  height: 150px;
+  background-color: #f9f9f9;
+  border-radius: 50%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-decoration: none;
+  color: #333;
+  font-size: 50px;
+  transition: transform 0.3s, box-shadow 0.3s;
+  cursor: pointer;
+}
+
+.image-item:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.image-item .plant-name {
+  position: absolute;
+  bottom: -25px;
+  font-size: 16px;
+  color: #555;
+  font-weight: bold;
+  text-align: center;
+}
+
+.image-item:hover .plant-name {
+  color: #4caf50; /* Highlight plant name on hover */
 }
 
 /* Footer */
@@ -93,9 +136,51 @@ body {
   color: #fff;
   padding: 20px;
   font-size: 14px;
+  text-align: center;
 }
 
 .footer a {
   color: #fff;
   text-decoration: underline;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .navbar-content {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .navbar-links {
+    flex-direction: column;
+    gap: 10px;
+    align-items: flex-start;
+  }
+
+  .hero-section h1 {
+    font-size: 36px;
+  }
+
+  .hero-section p {
+    font-size: 16px;
+  }
+
+  .image-grid {
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  }
+
+  .image-item {
+    width: 100px;
+    height: 100px;
+    font-size: 40px;
+  }
+
+  .image-item .plant-name {
+    font-size: 14px;
+    bottom: -20px;
+  }
+
+  .footer {
+    font-size: 12px;
+  }
 }

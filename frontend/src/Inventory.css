@@ -21,10 +21,12 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
   margin-bottom: 20px;
+  flex-wrap: wrap; /* Enable wrapping for smaller screens */
 }
 
 .filter-group, .sort-group {
   flex: 1;
+  min-width: 250px; /* Ensure a minimum width for each section */
 }
 
 h3 {
@@ -34,7 +36,7 @@ h3 {
 
 .filter-row {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: wrap; /* Allow items to wrap for smaller screens */
   gap: 10px;
 }
 
@@ -63,6 +65,52 @@ select {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
   text-align: center;
+  overflow-x: auto; /* Enable horizontal scrolling for smaller screens */
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+table th,
+table td {
+  text-align: left;
+  padding: 8px;
+  border: 1px solid #ddd;
+}
+
+table th {
+  background-color: #4caf50;
+  color: white;
+}
+
+table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+table tr:hover {
+  background-color: #f1f1f1;
+}
+
+.apply-button {
+  background: #66bb6a;
+  color: white;
+  padding: 5px 15px; /* Smaller size */
+  border: none;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s ease-in-out;
+}
+
+.apply-button:hover {
+  background: #43a047;
+}
+
+.apply-button:active {
+  transform: scale(0.98);
 }
 
 .export-button {
@@ -98,4 +146,43 @@ select {
 
 .footer a:hover {
   text-decoration: underline;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .filter-sort-section {
+    flex-direction: column;
+    gap: 20px;
+    padding: 10px;
+  }
+
+  .navbar-content {
+    flex-wrap: wrap; /* Allow navbar content to wrap */
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .inventory-table {
+    font-size: 0.9em; /* Adjust font size for smaller screens */
+  }
+
+  .apply-button {
+    padding: 8px 16px;
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .filter-item {
+    min-width: 100px;
+  }
+
+  .inventory-title {
+    font-size: 1.5em;
+  }
+
+  .apply-button {
+    padding: 6px 12px;
+    font-size: 10px;
+  }
 }
