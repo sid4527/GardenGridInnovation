@@ -1,15 +1,10 @@
-import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
+import { FutureConfigProvider } from 'react-router';
 import App from './App';
-import reportWebVitals from './reportWebVitals';
-import { sendToVercelAnalytics } from './vitals';
 
 ReactDOM.render(
-  <React.StrictMode>
+  <FutureConfigProvider v7_startTransition v7_relativeSplatPath>
     <App />
-  </React.StrictMode>,
+  </FutureConfigProvider>,
   document.getElementById('root')
 );
-
-reportWebVitals(sendToVercelAnalytics);
