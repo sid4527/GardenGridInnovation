@@ -11,11 +11,12 @@ const port = 9000;
 // CORS configuration
 app.use(
   cors({
-    origin: 'http://localhost:3000',
+    origin: [process.env.FRONTEND_URL, process.env.BACKEND_URL], // Add your backend's public URL
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],
   })
 );
+
 
 // Middleware to parse JSON bodies
 app.use(express.json());
@@ -101,6 +102,38 @@ app.post('/api/users', async (req, res) => {
     res.status(500).json({ message: 'An error occurred during sign-up. Please try again.' });
   }
 });
+
+// **Route: Add New Care Task**
+app.post('/api/care-tasks', async (req, res) => {
+    const { TaskDate, CareType, PlantName, Status, Notes } = req.body;
+  
+    // Validate required fields
+    if (!TaskDate || !CareType || !PlantName || !Status) {
+      return res.status(400).json({ message: 'All fields are required.' });
+    }
+  
+    try {
+      const pool = await poolPromise;
+  
+      const query = `
+        INSERT INTO CareTasks (TaskDate, CareType, PlantName, Status, Notes)
+        VALUES (@TaskDate, @CareType, @PlantName, @Status, @Notes)
+      `;
+      await pool.request()
+        .input('TaskDate', sql.Date, TaskDate)
+        .input('CareType', sql.NVarChar, CareType)
+        .input('PlantName', sql.NVarChar, PlantName)
+        .input('Status', sql.NVarChar, Status)
+        .input('Notes', sql.NVarChar, Notes)
+        .query(query);
+  
+      res.status(201).json({ message: 'New care task added successfully.' });
+    } catch (error) {
+      console.error('Error adding care task:', error);
+      res.status(500).json({ message: 'Failed to add care task.' });
+    }
+  });
+  
 
 // **Route: Fetch Distinct Filter Options**
 app.get('/api/inventory/filters', async (req, res) => {
@@ -212,6 +245,24 @@ app.post('/api/login', async (req, res) => {
   }
 });
 
+// **Route: Fetch Growth Records**
+app.get('/api/growth-records', async (req, res) => {
+  try {
+    const pool = await poolPromise;
+
+    const query = `
+      SELECT RecordDate, PlantName, HeightCM, Notes 
+      FROM GrowthRecords
+    `;
+    const result = await pool.request().query(query);
+
+    res.json(result.recordset);
+  } catch (error) {
+    console.error('Error fetching growth records:', error);
+    res.status(500).json({ message: 'Failed to fetch growth records.' });
+  }
+});
+
 // **Route: Add Growth Records**
 app.post('/api/growth-records', async (req, res) => {
   const { date, plant, height, notes } = req.body;
@@ -224,8 +275,8 @@ app.post('/api/growth-records', async (req, res) => {
     const pool = await poolPromise;
 
     const query = `
-      INSERT INTO GrowthRecords (Date, Plant, Height, Notes)
-      VALUES (@Date, @Plant, @Height, @Notes)
+      INSERT INTO GrowthRecords (RecordDate, PlantName, HeightCM, Notes)
+      VALUES (@RecordDate, @PlantName, @HeightCM, @Notes)
     `;
     await pool.request()
       .input('Date', sql.Date, date)
