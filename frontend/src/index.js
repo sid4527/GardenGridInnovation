@@ -1,10 +1,11 @@
+import React from 'react';
 import ReactDOM from 'react-dom';
-import { FutureConfigProvider } from 'react-router';
+import { BrowserRouter as Router } from 'react-router-dom';
 import App from './App';
 
 ReactDOM.render(
-  <FutureConfigProvider v7_startTransition v7_relativeSplatPath>
+  <Router>
     <App />
-  </FutureConfigProvider>,
+  </Router>,
   document.getElementById('root')
 );
