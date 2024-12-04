@@ -39,6 +39,35 @@
   border-radius: 5px;
 }
 
+.about-us {
+  margin-top: 40px;
+  padding: 30px;
+  background-color: #eaf6e9; /* Soft green background for distinction */
+  border-radius: 15px;
+  text-align: center; /* Center-align text for better symmetry */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+
+.about-us h2 {
+  font-size: 2rem;
+  color: #3d813b; /* Green theme */
+  margin-bottom: 20px;
+  font-weight: bold; /* Emphasize heading */
+}
+
+.about-us p {
+  font-size: 1.1rem;
+  color: #555; /* Softer text color for readability */
+  line-height: 1.8; /* Increase line height for better spacing */
+  margin: 10px auto;
+  max-width: 900px; /* Limit width for a balanced layout */
+}
+
+.about-us p:last-child {
+  margin-bottom: 0; /* Remove extra margin for the last paragraph */
+}
+
+
 @media (max-width: 768px) {
   .navbar-links {
     flex-wrap: wrap;

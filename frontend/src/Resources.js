@@ -26,24 +26,23 @@ function Resources() {
         </p>
 
         <div className="resource-grid">
-        <section className="resource-card">
-          <h3>Guides and Tutorials</h3>
-          <p>Learn best practices and techniques for managing your garden inventory.</p>
-          <button 
-            className="resource-button" 
-            onClick={() => window.open('https://www.comcash.com/blog/garden-center-inventory-management-tips', '_blank')}
-          >
-            Explore Guides
-          </button>
-        </section>
-
+          <section className="resource-card">
+            <h3>Guides and Tutorials</h3>
+            <p>Learn best practices and techniques for managing your garden inventory.</p>
+            <button 
+              className="resource-button" 
+              onClick={() => window.open('https://www.comcash.com/blog/garden-center-inventory-management-tips', '_blank')}
+            >
+              Explore Guides
+            </button>
+          </section>
 
           <section className="resource-card">
             <h3>Video Resources</h3>
             <p>Watch video tutorials to master your garden inventory system.</p>
             <button 
-            className="resource-button" 
-            onClick={() => window.open('https://www.youtube.com/watch?v=2-OsAxK-Y-0', '_blank')}
+              className="resource-button" 
+              onClick={() => window.open('https://www.youtube.com/watch?v=2-OsAxK-Y-0', '_blank')}
             >
               Watch Videos
             </button>
@@ -53,8 +52,8 @@ function Resources() {
             <h3>Blog Posts and Articles</h3>
             <p>Read the latest insights and tips from industry experts.</p>
             <button 
-            className="resource-button" 
-            onClick={() => window.open('https://plantingjustice.org/blogs/all?gad_source=1&gclid=EAIaIQobChMIzNDg3IKHigMVTEH_AR1UBDd8EAAYASAAEgL3kvD_BwE', '_blank')}
+              className="resource-button" 
+              onClick={() => window.open('https://plantingjustice.org/blogs/all?gad_source=1&gclid=EAIaIQobChMIzNDg3IKHigMVTEH_AR1UBDd8EAAYASAAEgL3kvD_BwE', '_blank')}
             >
               Read Articles
             </button>
@@ -64,13 +63,28 @@ function Resources() {
             <h3>News and Updates</h3>
             <p>Stay informed with the latest news and system updates.</p>
             <button 
-            className="resource-button" 
-            onClick={() => window.open('https://www.gardencentermag.com/tag/inventory-management-/', '_blank')}
+              className="resource-button" 
+              onClick={() => window.open('https://www.gardencentermag.com/tag/inventory-management-/', '_blank')}
             >
               Get Updates
             </button>
           </section>
         </div>
+
+        {/* About Us Section */}
+        <section className="about-us">
+          <h2>About Us</h2>
+          <p>
+            At Garden Grid, we are passionate about helping you grow and manage your nursery with ease and efficiency. 
+            Our platform combines the latest tools, resources, and tips to make garden management seamless, whether 
+            you're an experienced nursery or just starting out.
+          </p>
+          <p>
+            With a focus on sustainability and innovation, Garden Grid empowers you to cultivate your garden inventory while 
+            staying organized and informed. Join our community of garden enthusiasts and take your gardening inventory management journey 
+            to the next level!
+          </p>
+        </section>
       </main>
 
       <footer className="footer">

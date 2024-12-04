@@ -20,10 +20,6 @@ function GrowthTracking() {
     setShowForm(!showForm);
   };
 
-  const handleLoginRedirect = () => {
-    navigate('/');
-  };
-
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -40,30 +36,32 @@ function GrowthTracking() {
     };
 
     try {
-      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL || 'https://3.21.98.193:9000'}/api/growth-records`, {
-        
+      const response = await fetch('http://localhost:9000/api/growth-records', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          RecordDate: formData.date,
-          PlantName: formData.plant,
-          HeightCM: formData.height,
-          Notes: formData.notes,
+          date: formData.date, // Match the field names expected by the backend
+          plant: formData.plant,
+          height: formData.height,
+          notes: formData.notes,
         }),
       });
 
       if (response.ok) {
-        console.log('New growth record added successfully');
+        alert('New growth record added successfully!');
         setRecords([...records, newRecord]); // Append the new record to the list
         setShowForm(false); // Hide the form after successful submission
         setFormData({ date: '', plant: 'Rose Bush', height: '', notes: '' }); // Reset the form
       } else {
-        console.error('Failed to add new growth record');
+        const errorData = await response.json();
+        console.error('Failed to add new growth record:', errorData.message);
+        alert(`Failed to add new growth record: ${errorData.message}`);
       }
     } catch (error) {
       console.error('Error:', error);
+      alert('An unexpected error occurred. Please try again.');
     }
   };
 
@@ -132,7 +130,7 @@ function GrowthTracking() {
                 Height (cm): <input type="number" name="height" value={formData.height} onChange={handleChange} required />
               </label>
               <label>
-                Notes: <input type="text" name="notes" value={formData.notes} onChange={handleChange} placeholder="Growth observations..." />
+                Notes: <input type="text" name="notes" value={formData.notes} onChange={handleChange} placeholder="Describe growth observations..." />
               </label>
               <button type="submit" className="submit-button">Submit</button>
             </form>

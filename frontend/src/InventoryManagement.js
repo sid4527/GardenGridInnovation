@@ -9,18 +9,15 @@ function InventoryManagement() {
   const [item, setItem] = useState('Rose Bush');
   const [quantity, setQuantity] = useState('');
   const [condition, setCondition] = useState('Healthy');
-  const [records, setRecords] = useState([ // State to store inventory records
+  const [records, setRecords] = useState([
     { date: '2024-10-31', item: 'Rose Bush', quantity: 15, condition: 'Healthy' },
     { date: '2024-10-31', item: 'Lavender', quantity: 20, condition: 'Healthy' },
   ]);
+  const [error, setError] = useState(''); // State to handle errors
   const navigate = useNavigate();
 
   const handleNewEntry = () => {
     setShowForm(!showForm);
-  };
-
-  const handleLoginRedirect = () => {
-    navigate('/');
   };
 
   const handleSubmit = async (e) => {
@@ -29,29 +26,37 @@ function InventoryManagement() {
     const newEntry = {
       date,
       item,
-      quantity: parseInt(quantity), // Ensure quantity is a number
+      quantity: parseInt(quantity, 10), // Ensure quantity is a valid number
       condition,
     };
 
     try {
-      // Send the data to the backend API
-      await axios.post('http://localhost:9000/api/inventory', newEntry);
+      // Use environment variable for backend URL
+      const BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:9000';
+      const response = await axios.post(`${BASE_URL}/api/inventory`, newEntry, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      console.log('Response from backend:', response.data);
       setRecords([...records, newEntry]); // Append the new entry to the list
       alert('New inventory item added successfully!');
+      setError(''); // Clear any previous errors
       setShowForm(false); // Hide the form
       setDate(''); // Reset the form fields
       setItem('Rose Bush');
       setQuantity('');
       setCondition('Healthy');
     } catch (error) {
-      console.error('Error adding new inventory item:', error);
-      alert('Failed to add new inventory item.');
+      console.error('Error adding new inventory item:', error.response?.data || error.message);
+      setError('Failed to add new inventory item. Please try again.'); // Display error message
     }
   };
 
   return (
     <div className="inventory-management">
-       <header className="navbar">
+      <header className="navbar">
         <div className="navbar-content">
           <div className="navbar-logo">🌿 Garden Grid</div>
           <nav className="navbar-links">
@@ -102,7 +107,12 @@ function InventoryManagement() {
             <form onSubmit={handleSubmit}>
               <label>
                 Date:
-                <input type="date" value={date} onChange={(e) => setDate(e.target.value)} required />
+                <input
+                  type="date"
+                  value={date}
+                  onChange={(e) => setDate(e.target.value)}
+                  required
+                />
               </label>
               <label>
                 Item:
@@ -136,6 +146,7 @@ function InventoryManagement() {
           </div>
         )}
 
+        {error && <p className="error-message">{error}</p>} {/* Display error message */}
       </div>
     </div>
   );

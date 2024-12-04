@@ -11,12 +11,10 @@ const port = 9000;
 // CORS configuration
 app.use(
   cors({
-    origin: [
-      process.env.FRONTEND_URL || 'https://garden-grid-app.vercel.app/', // Default to frontend URL if variable is not set
-      process.env.REACT_APP_BACKEND_URL || 'https://3.21.98.193:9000', // Default to backend URL if variable is not set
-    ],
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization'], // Allow headers required for API communication
+    origin: 'http://localhost:3000', // Allow requests from React frontend
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Allowed HTTP methods
+    allowedHeaders: ['Content-Type', 'Authorization'], // Allowed headers
+    credentials: true, // Include credentials if necessary
   })
 );
 
@@ -50,6 +48,37 @@ const poolPromise = new sql.ConnectionPool(dbConfig)
 // Root route
 app.get('/', (req, res) => {
   res.send('Welcome to the Garden Grid API');
+});
+
+// **Route: Add New Inventory Item**
+app.post('/api/inventory', async (req, res) => {
+  const { date, item, quantity, condition } = req.body;
+
+  // Validate required fields
+  if (!date || !item || !quantity || !condition) {
+    return res.status(400).json({ message: 'All fields are required.' });
+  }
+
+  try {
+    const pool = await poolPromise;
+
+    const query = `
+      INSERT INTO Inventory (Date, Item, Quantity, Condition)
+      VALUES (@date, @item, @quantity, @condition)
+    `;
+
+    await pool.request()
+      .input('date', sql.Date, date)
+      .input('item', sql.NVarChar, item)
+      .input('quantity', sql.Int, quantity)
+      .input('condition', sql.NVarChar, condition)
+      .query(query);
+
+    res.status(201).json({ message: 'Inventory item added successfully!' });
+  } catch (error) {
+    console.error('Error adding inventory item:', error);
+    res.status(500).json({ message: 'Failed to add inventory item.', error: error.message });
+  }
 });
 
 // Use the inventory routes
@@ -265,10 +294,11 @@ app.get('/api/growth-records', async (req, res) => {
   }
 });
 
-// **Route: Add Growth Records**
+// **Route: Add New Growth Record**
 app.post('/api/growth-records', async (req, res) => {
   const { date, plant, height, notes } = req.body;
 
+  // Validate required fields
   if (!date || !plant || !height || !notes) {
     return res.status(400).json({ message: 'All fields are required.' });
   }
@@ -278,19 +308,20 @@ app.post('/api/growth-records', async (req, res) => {
 
     const query = `
       INSERT INTO GrowthRecords (RecordDate, PlantName, HeightCM, Notes)
-      VALUES (@RecordDate, @PlantName, @HeightCM, @Notes)
+      VALUES (@date, @plant, @height, @notes)
     `;
+
     await pool.request()
-      .input('Date', sql.Date, date)
-      .input('Plant', sql.NVarChar, plant)
-      .input('Height', sql.Int, height)
-      .input('Notes', sql.NVarChar, notes)
+      .input('date', sql.Date, date)
+      .input('plant', sql.NVarChar, plant)
+      .input('height', sql.Int, height)
+      .input('notes', sql.NVarChar, notes)
       .query(query);
 
-    res.status(201).json({ message: 'Growth record added successfully.' });
+    res.status(201).json({ message: 'Growth record added successfully!' });
   } catch (error) {
     console.error('Error adding growth record:', error);
-    res.status(500).json({ message: 'Failed to add growth record.' });
+    res.status(500).json({ message: 'Failed to add growth record.', error: error.message });
   }
 });
 
