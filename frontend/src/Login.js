@@ -13,7 +13,7 @@ const Login = () => {
     e.preventDefault();
     try {
       // Use the environment variable for the backend API URL
-      const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL || 'http://3.21.98.193:9000'}/api/login`, { userId, password });
+      const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL || 'https://3.21.98.193:9000'}/api/login`, { userId, password });
       setMessage(response.data.message || 'Login successful!');
       
       // Redirect to home page upon successful login
