@@ -17,8 +17,8 @@ function Inventory() {
     const fetchInventoryData = async () => {
       try {
         const [itemsResponse, filtersResponse] = await Promise.all([
-          axios.get(`${process.env.REACT_APP_BACKEND_URL || 'http://3.21.98.193:9000'}/api/inventory/items`),
-          axios.get(`${process.env.REACT_APP_BACKEND_URL || 'http://3.21.98.193:9000'}/api/inventory/filters`),
+          axios.get(`${process.env.REACT_APP_BACKEND_URL || 'https://3.21.98.193:9000'}/api/inventory/items`),
+          axios.get(`${process.env.REACT_APP_BACKEND_URL || 'https://3.21.98.193:9000'}/api/inventory/filters`),
         ]);
         setInventoryItems(itemsResponse.data);
         setConditions(filtersResponse.data.conditions);
@@ -41,7 +41,7 @@ function Inventory() {
       };
 
       const response = await axios.get(
-        `${process.env.REACT_APP_BACKEND_URL || 'http://3.21.98.193:9000'}/api/inventory/items`,
+        `${process.env.REACT_APP_BACKEND_URL || 'https://3.21.98.193:9000'}/api/inventory/items`,
         { params }
       );
       setInventoryItems(response.data);
