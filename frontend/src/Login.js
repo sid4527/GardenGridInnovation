@@ -12,17 +12,19 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // Use the environment variable for the backend API URL
-      const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL || 'https://3.21.98.193:9000'}/api/login`, { userId, password });
+      // Send login data to the backend API
+      const response = await axios.post('http://localhost:9000/api/login', { userId, password });
       setMessage(response.data.message || 'Login successful!');
       
       // Redirect to home page upon successful login
-      setTimeout(() => {
-        navigate('/');
-      }, 1500);
+      navigate('/');
     } catch (error) {
       setMessage(error.response?.data?.message || 'Login failed. Please try again.');
     }
+  };
+
+  const handleGoHome = () => {
+    navigate('/'); // Redirect to home page
   };
 
   const handleSignUp = () => {
@@ -61,6 +63,7 @@ const Login = () => {
             {message}
           </p>
         )}
+        {/*<button onClick={handleGoHome} className="home-button">Go to Home</button>*/}
         <button onClick={handleSignUp} className="home-button">Sign Up</button>
       </div>
     </div>

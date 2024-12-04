@@ -1,7 +1,7 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import axios from 'axios';
-import InventoryManagement from './InventoryManagement';
+import InventoryManagement from '../InventoryManagement';
 
 jest.mock('axios'); // Mock axios to intercept API calls
 

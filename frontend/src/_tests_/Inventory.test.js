@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
-import Inventory from './Inventory';
+import Inventory from '../Inventory';
 
 describe('Inventory Component', () => {
   test('renders the inventory title', () => {

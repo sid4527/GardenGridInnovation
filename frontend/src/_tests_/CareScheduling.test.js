@@ -2,7 +2,7 @@ import React from 'react';
 import { render, screen, fireEvent, waitFor, act } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import axios from 'axios';
-import CareScheduling from './CareScheduling';
+import CareScheduling from '../CareScheduling';
 
 // Mock axios for API calls
 jest.mock('axios', () => ({

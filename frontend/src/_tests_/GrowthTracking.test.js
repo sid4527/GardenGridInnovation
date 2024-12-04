@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { createMemoryRouter, RouterProvider } from 'react-router-dom';
-import GrowthTracking from './GrowthTracking';
+import GrowthTracking from '../GrowthTracking';
 
 describe('GrowthTracking Component', () => {
   const router = createMemoryRouter(
